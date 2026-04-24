@@ -3,6 +3,12 @@
 import { useSyncExternalStore } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
+import { trackVisit } from '@/lib/analytics';
+
+// Track anonymous visit once on app load
+if (typeof window !== 'undefined') {
+  trackVisit();
+}
 
 // Hydration gate: true on client, false on server
 const subscribe = () => () => {};
