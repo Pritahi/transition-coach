@@ -53,7 +53,7 @@ export default function MobileFooter() {
     <footer className="fixed bottom-[50px] left-0 right-0 z-40 safe-area-inset-bottom">
       <div className="max-w-lg mx-auto px-3">
         {/* Motivational Quote */}
-        <div className="flex justify-center py-1.5">
+        <div className="flex justify-center py-1">
           <AnimatePresence mode="wait">
             <motion.div
               key={quote}
@@ -63,7 +63,7 @@ export default function MobileFooter() {
               transition={{ duration: 0.25 }}
               className="flex items-center gap-1"
             >
-              <p className="text-[11px] text-muted-foreground/60 font-medium text-center leading-tight">
+              <p className="text-[10px] text-muted-foreground/60 font-medium text-center leading-tight">
                 {quote}
               </p>
             </motion.div>
@@ -71,32 +71,32 @@ export default function MobileFooter() {
         </div>
 
         {/* Stats Bar — iOS compact style */}
-        <div className="mb-1 rounded-2xl bg-muted/40 backdrop-blur-sm border border-border/30 px-3 py-2">
-          <div className="flex items-center justify-between gap-1">
-            <div className="flex items-center gap-1 min-w-0">
-              <Zap className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-              <span className="text-[13px] font-bold text-foreground tabular-nums">{todayCompletedSteps}</span>
+        <div className="mb-0.5 rounded-xl bg-muted/40 backdrop-blur-sm border border-border/30 px-2.5 py-1.5">
+          <div className="flex items-center justify-between gap-0.5">
+            <div className="flex items-center gap-0.5 min-w-0">
+              <Zap className="w-3 h-3 text-emerald-500 flex-shrink-0" />
+              <span className="text-[12px] font-bold text-foreground tabular-nums">{todayCompletedSteps}</span>
             </div>
 
-            <div className="w-px h-3.5 bg-border/40" />
+            <div className="w-px h-3 bg-border/40" />
 
-            <div className="flex items-center gap-1 min-w-0">
-              <TrendingUp className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
-              <span className="text-[13px] font-bold text-foreground tabular-nums">{score}</span>
+            <div className="flex items-center gap-0.5 min-w-0">
+              <TrendingUp className="w-3 h-3 text-amber-500 flex-shrink-0" />
+              <span className="text-[12px] font-bold text-foreground tabular-nums">{score}</span>
             </div>
 
-            <div className="w-px h-3.5 bg-border/40" />
+            <div className="w-px h-3 bg-border/40" />
 
-            <div className="flex items-center gap-1 min-w-0">
-              <Flame className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
-              <span className="text-[13px] font-bold text-foreground tabular-nums">{streak}</span>
+            <div className="flex items-center gap-0.5 min-w-0">
+              <Flame className="w-3 h-3 text-orange-500 flex-shrink-0" />
+              <span className="text-[12px] font-bold text-foreground tabular-nums">{streak}</span>
             </div>
 
-            <div className="w-px h-3.5 bg-border/40" />
+            <div className="w-px h-3 bg-border/40" />
 
-            <div className="flex items-center gap-1 min-w-0">
-              <Heart className="w-3.5 h-3.5 text-rose-400 flex-shrink-0" />
-              <span className="text-[13px] font-bold text-foreground tabular-nums">{completionRate}%</span>
+            <div className="flex items-center gap-0.5 min-w-0">
+              <Heart className="w-3 h-3 text-rose-400 flex-shrink-0" />
+              <span className="text-[12px] font-bold text-foreground tabular-nums">{completionRate}%</span>
             </div>
           </div>
         </div>

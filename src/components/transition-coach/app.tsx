@@ -114,7 +114,7 @@ export default function TransitionCoach() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-lg mx-auto w-full pb-40">
+      <main className="flex-1 max-w-lg mx-auto w-full pb-52">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentView}
