@@ -149,11 +149,10 @@ export default function NowScreen() {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [showDelayRescue, setShowDelayRescue] = useState(false);
   const [skipMsg, setSkipMsg] = useState('');
-  const [tick, setTick] = useState(0); // force re-render for live countdown
+  const [tick, setTick] = useState(0);
   const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoFlowRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Memoize the motivational message so it doesn't change on re-render
   const motivationalMsg = useMemo(() => getRandomEncouragement(), []);
   const waitingMsg = useMemo(() => getRandomWaitingMsg(), []);
 
@@ -162,13 +161,11 @@ export default function NowScreen() {
   const hasWaitingTasks =
     waitingSession?.isActive && waitingSession.tasks.some((t) => !t.isCompleted);
 
-  // Live tick every second for countdowns
   useEffect(() => {
     const interval = setInterval(() => setTick((t) => t + 1), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Delay rescue: show after 2 min if task not started
   useEffect(() => {
     if (activeTask && !timerActive) {
       delayRef.current = setTimeout(() => {
@@ -181,7 +178,6 @@ export default function NowScreen() {
     };
   }, [activeTask?.step.id, timerActive]);
 
-  // Time pressure: show urgent message when <5 min left
   const timePressure = useMemo(() => {
     if (!activeTask || timerActive) return null;
     const diff = new Date(activeTask.step.scheduledTime).getTime() - Date.now();
@@ -235,7 +231,6 @@ export default function NowScreen() {
     haptic('heavy');
   };
 
-  // Auto flow: auto-start timer for next step
   useEffect(() => {
     if (autoFlowEnabled && activeTask && !timerActive) {
       autoFlowRef.current = setTimeout(() => {
@@ -254,7 +249,6 @@ export default function NowScreen() {
   const totalCount = alarms.reduce((sum, a) => sum + a.steps.length, 0);
   const score = getTotalScore();
 
-  // Build "Coming Up" list — next steps from all active alarms
   const comingUp = useMemo(() => {
     const upcoming: { alarm: typeof alarms[0]; step: typeof alarms[0]['steps'][0]; timeLabel: string }[] = [];
     for (const alarm of alarms) {
@@ -265,7 +259,7 @@ export default function NowScreen() {
           const diff = new Date(step.scheduledTime).getTime() - Date.now();
           const timeLabel = diff <= 0 ? 'Overdue' : formatCountdown(step.scheduledTime);
           upcoming.push({ alarm, step, timeLabel });
-          break; // only first incomplete step per alarm
+          break;
         }
       }
     }
@@ -328,18 +322,18 @@ export default function NowScreen() {
                     </span>
                   </div>
                   {timerActive ? (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full"
-                      >
-                        IN PROGRESS
-                      </motion.span>
-                    ) : (
-                      <span className="bg-white/10 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        {formatCountdownPrecise(activeTask.step.scheduledTime)}
-                      </span>
-                    )}
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full"
+                    >
+                      IN PROGRESS
+                    </motion.span>
+                  ) : (
+                    <span className="bg-white/10 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      {formatCountdownPrecise(activeTask.step.scheduledTime)}
+                    </span>
+                  )}
                 </div>
 
                 <h1 className="text-2xl md:text-3xl font-extrabold mb-1">
@@ -457,7 +451,7 @@ export default function NowScreen() {
             exit={{ opacity: 0 }}
             className="mx-4 mt-3 space-y-3"
           >
-            {/* Main empty state — simplified */}
+            {/* Main empty state */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 text-center">
               <motion.div
                 animate={{ y: [0, -6, 0] }}
@@ -479,7 +473,7 @@ export default function NowScreen() {
               </Button>
             </div>
 
-            {/* Waiting Mode suggestion — Smart prompt */}
+            {/* Waiting Mode suggestion */}
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => setCurrentView('waiting')}
@@ -543,7 +537,7 @@ export default function NowScreen() {
         )}
       </AnimatePresence>
 
-      {/* I'M STUCK BUTTON — Anti-overthinking */}
+      {/* I'M STUCK BUTTON */}
       {!timerActive && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -605,7 +599,7 @@ export default function NowScreen() {
 
       {/* Content area */}
       <div className="p-4">
-        {/* COMING UP — next steps from all alarms */}
+        {/* COMING UP */}
         {comingUp.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -644,7 +638,7 @@ export default function NowScreen() {
           </motion.div>
         )}
 
-        {/* TODAY'S PROGRESS — with score */}
+        {/* TODAY'S PROGRESS */}
         {(completedCount > 0 || todayCompletedSteps > 0) && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -688,7 +682,6 @@ export default function NowScreen() {
                     </motion.span>
                   )}
                 </div>
-                {/* Score */}
                 <div className="flex items-center gap-3 mt-1.5">
                   <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                     <motion.div
@@ -704,7 +697,6 @@ export default function NowScreen() {
                     {score} pts
                   </span>
                 </div>
-                {/* Skip penalty indicator */}
                 {todaySkippedSteps > 0 && (
                   <motion.p
                     initial={{ opacity: 0 }}
