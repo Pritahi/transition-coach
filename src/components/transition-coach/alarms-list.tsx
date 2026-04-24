@@ -168,7 +168,7 @@ export default function AlarmsList() {
             </p>
             <Button
               onClick={() => setShowCreateAlarm(true)}
-              className="bg-gray-900 hover:bg-black text-white shadow-lg shadow-black/10"
+              className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
               size="lg"
             >
               <Zap className="w-5 h-5 mr-2" />
@@ -192,7 +192,7 @@ export default function AlarmsList() {
         </div>
         <Button
           onClick={() => setShowCreateAlarm(true)}
-          className="bg-gray-900 hover:bg-black text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-black/10"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-emerald-500/20"
           size="icon"
         >
           <Plus className="w-5 h-5" />
@@ -210,7 +210,7 @@ export default function AlarmsList() {
               <Zap className="w-3 h-3 text-gray-700" />
               Up Next
             </p>
-            <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 text-white p-4 rounded-2xl shadow-lg shadow-black/20">
+            <div className="relative bg-gradient-to-br from-emerald-500 to-emerald-700 text-white p-4 rounded-2xl shadow-lg shadow-emerald-500/20">
               {/* Delete button — top right corner */}
               <button
                 onClick={() => setConfirmDeleteId(nextAlarm.id)}
@@ -255,7 +255,7 @@ export default function AlarmsList() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={() => handleStartAlarm(nextAlarm.id)}
-                className="w-full bg-white text-gray-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-black/10 hover:bg-gray-100"
+                className="w-full bg-white text-emerald-700 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-black/5 hover:bg-emerald-50"
               >
                 <Play className="w-4 h-4 fill-current" />
                 Start Now
@@ -397,7 +397,7 @@ export default function AlarmsList() {
                                     width: `${alarm.steps.length > 0 ? (completedCount / alarm.steps.length) * 100 : 0}%`,
                                   }}
                                   className={`h-full rounded-full ${
-                                    status === 'completed' ? 'bg-gray-800' : 'bg-orange-400'
+                                    status === 'completed' ? 'bg-emerald-500' : 'bg-orange-400'
                                   }`}
                                 />
                               </div>
@@ -547,7 +547,7 @@ export default function AlarmsList() {
                         <Button
                           size="sm"
                           onClick={() => handleStartAlarm(alarm.id)}
-                          className="w-full bg-gray-900 hover:bg-black text-white h-9 text-xs rounded-xl"
+                          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-9 text-xs rounded-xl"
                         >
                           <Play className="w-3.5 h-3.5 mr-1 fill-current" />
                           Start Now — {nextIncomplete.label}

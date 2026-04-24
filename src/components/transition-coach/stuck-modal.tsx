@@ -87,7 +87,7 @@ export default function StuckModal() {
           >
             <div className="bg-background border border-border rounded-2xl shadow-2xl max-w-sm w-full pointer-events-auto overflow-hidden relative">
               {/* Decorative glow */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-rose-100 dark:bg-rose-900/10 rounded-full blur-3xl" />
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-100 dark:bg-emerald-900/10 rounded-full blur-3xl" />
 
               {!done ? (
                 <>
@@ -160,7 +160,7 @@ export default function StuckModal() {
 
                           {/* Do it button */}
                           <div className="flex-shrink-0">
-                            <div className={`w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center shadow-sm`}>
+                            <div className={`w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm`}>
                               <CheckCircle2 className="w-4 h-4 text-white" />
                             </div>
                           </div>
@@ -183,7 +183,7 @@ export default function StuckModal() {
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', delay: 0.1, stiffness: 200 }}
                   >
-                    <Sparkles className="w-14 h-14 text-gray-700 mx-auto mb-3" />
+                    <Sparkles className="w-14 h-14 text-emerald-500 mx-auto mb-3" />
                   </motion.div>
                   <p className="text-lg font-bold mb-1">{completionMsg}</p>
                   <p className="text-sm text-muted-foreground">

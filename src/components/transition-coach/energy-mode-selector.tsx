@@ -10,17 +10,17 @@ const modes: { id: EnergyMode; icon: typeof Battery; activeClass: string }[] = [
   {
     id: 'low',
     icon: Battery,
-    activeClass: 'border-b-2 border-black text-gray-900 font-bold',
+    activeClass: 'border-emerald-500 text-emerald-700 font-bold bg-emerald-50',
   },
   {
     id: 'normal',
     icon: Zap,
-    activeClass: 'border-b-2 border-black text-gray-900 font-bold',
+    activeClass: 'border-emerald-500 text-emerald-700 font-bold bg-emerald-50',
   },
   {
     id: 'high',
     icon: Flame,
-    activeClass: 'border-b-2 border-orange-500 text-orange-700 font-bold',
+    activeClass: 'border-orange-500 text-orange-700 font-bold bg-orange-50',
   },
 ];
 
@@ -33,7 +33,7 @@ export default function EnergyModeSelector() {
   };
 
   return (
-    <div className="flex gap-1.5 p-0.5 bg-gray-50 rounded-xl">
+    <div className="flex gap-1.5 p-0.5 bg-white/60 rounded-xl border border-gray-200/60">
       {modes.map((mode) => {
         const isActive = energyMode === mode.id;
         const Icon = mode.icon;
@@ -44,10 +44,10 @@ export default function EnergyModeSelector() {
             key={mode.id}
             whileTap={{ scale: 0.96 }}
             onClick={() => handleSelect(mode.id)}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[10px] border transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[10px] border-2 transition-all ${
               isActive
                 ? `${mode.activeClass}`
-                : 'border-b-2 border-transparent text-gray-400 hover:text-gray-600'
+                : 'border-transparent text-gray-400 hover:text-gray-600'
             }`}
           >
             <span className="text-[13px]">{meta.emoji}</span>

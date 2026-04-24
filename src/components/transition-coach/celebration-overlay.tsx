@@ -110,7 +110,7 @@ export default function CelebrationOverlay() {
               transition={{ delay: 0.25 }}
             >
               <div className="flex items-center justify-center gap-1.5 mb-1">
-                <CheckCircle2 className="w-4 h-4 text-gray-700" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                 <p className="text-base font-bold text-foreground">
                   {lastCompletedLabel}
                 </p>

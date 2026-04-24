@@ -146,7 +146,7 @@ export default function FeedbackSheet() {
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', delay: 0.1 }}
                   >
-                    <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                    <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
                   </motion.div>
                   <h3 className="text-xl font-bold mb-1">Thanks!</h3>
                   <p className="text-sm text-muted-foreground">
@@ -207,7 +207,7 @@ export default function FeedbackSheet() {
                           feedbackTypes.find((t) => t.id === selectedType)?.placeholder
                         }
                         rows={4}
-                        className="w-full p-3.5 rounded-xl border border-border bg-muted/30 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-900/20 focus:border-gray-900 placeholder:text-muted-foreground/50"
+                        className="w-full p-3.5 rounded-xl border border-border bg-muted/30 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 placeholder:text-muted-foreground/50"
                       />
                       <p className="text-[11px] text-muted-foreground/50 mt-1 text-right">
                         {message.length}/500
@@ -219,7 +219,7 @@ export default function FeedbackSheet() {
                   <button
                     onClick={handleSubmit}
                     disabled={!selectedType || !message.trim() || sending}
-                    className="w-full h-[52px] bg-gray-900 hover:bg-black active:bg-gray-800 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-black/10 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                    className="w-full h-[52px] bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-emerald-500/20 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                   >
                     {sending ? (
                       <motion.div

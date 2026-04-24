@@ -14,7 +14,7 @@ export default function BottomNav() {
   const { currentView, setCurrentView } = useStore();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-2xl border-t border-border/40 safe-area-inset-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-2xl border-t border-gray-200/60 safe-area-inset-bottom">
       <div className="max-w-lg mx-auto flex items-center justify-around h-[50px] px-2">
         {tabs.map((tab) => {
           const isActive = currentView === tab.id;
@@ -28,16 +28,23 @@ export default function BottomNav() {
             >
               <Icon
                 className={`w-[22px] h-[22px] transition-colors ${
-                  isActive ? 'text-gray-900' : 'text-gray-300'
+                  isActive ? 'text-emerald-500' : 'text-gray-300'
                 }`}
               />
               <span
                 className={`text-[10px] font-medium transition-colors ${
-                  isActive ? 'text-gray-900' : 'text-gray-300'
+                  isActive ? 'text-emerald-500' : 'text-gray-300'
                 }`}
               >
                 {tab.label}
               </span>
+              {isActive && (
+                <motion.div
+                  layoutId="activeTabDot"
+                  className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-emerald-500"
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
+              )}
             </button>
           );
         })}

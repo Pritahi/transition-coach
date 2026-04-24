@@ -187,9 +187,9 @@ export default function WaitingMode() {
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center"
+                    className="w-24 h-24 mx-auto mb-4 rounded-full bg-emerald-50 flex items-center justify-center"
                   >
-                    <Timer className="w-12 h-12 text-gray-600" />
+                    <Timer className="w-12 h-12 text-emerald-600" />
                   </motion.div>
                   <h3 className="text-lg font-bold mb-1">
                     {timeAvailable > 0
@@ -298,7 +298,7 @@ export default function WaitingMode() {
                   <Button
                     onClick={handleStartWaiting}
                     disabled={!eventTitle.trim() || !eventTime}
-                    className="w-full h-12 bg-gray-900 hover:bg-black text-white text-base font-semibold rounded-xl disabled:opacity-40"
+                    className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white text-base font-semibold rounded-xl disabled:opacity-40"
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Start Now
@@ -343,7 +343,7 @@ export default function WaitingMode() {
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
-                      <Clock className="w-4 h-4 text-gray-600" />
+                      <Clock className="w-4 h-4 text-emerald-600" />
                     </motion.div>
                     <span className="text-sm font-bold text-gray-900 tabular-nums">
                       {formatTimeUntilPrecise(waitingSession.eventTime)}
@@ -354,7 +354,7 @@ export default function WaitingMode() {
                     {formatTimeUntil(waitingSession.eventTime)} left
                   </span>
                   {/* TIME PRESSURE */}
-                  <Badge className="bg-gray-900 text-white border-0 text-[10px] font-bold ml-auto">
+                  <Badge className="bg-emerald-500 text-white border-0 text-[10px] font-bold ml-auto">
                     {completedCount === 0 ? 'Start now!' : `${totalCount - completedCount} left`}
                   </Badge>
                 </div>
@@ -379,7 +379,7 @@ export default function WaitingMode() {
                       width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
                     }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-gray-800 rounded-full"
+                    className="h-full bg-emerald-500 rounded-full"
                   />
                 </div>
                 <span className="text-sm font-bold text-muted-foreground tabular-nums">
@@ -400,7 +400,7 @@ export default function WaitingMode() {
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', delay: 0.1 }}
                   >
-                    <Sparkles className="w-10 h-10 text-gray-600 mx-auto mb-2" />
+                    <Sparkles className="w-10 h-10 text-emerald-500 mx-auto mb-2" />
                   </motion.div>
                   <p className="font-bold text-gray-900 text-lg">
                     All done! You just unblocked your time.
@@ -452,7 +452,7 @@ export default function WaitingMode() {
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
                         task.isCompleted
-                          ? 'bg-gray-800 text-white scale-110'
+                          ? 'bg-emerald-500 text-white scale-110'
                           : 'bg-gray-100 text-gray-600'
                       }`}
                     >

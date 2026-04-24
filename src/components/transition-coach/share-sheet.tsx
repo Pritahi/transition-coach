@@ -94,15 +94,15 @@ export default function ShareSheet() {
 
                   <div className="grid grid-cols-3 gap-3 mb-3">
                     <div className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-1">
-                        <Zap className="w-5 h-5 text-gray-600" />
+                      <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-1">
+                        <Zap className="w-5 h-5 text-emerald-500" />
                       </div>
                       <p className="text-lg font-bold text-gray-700">{todayCompletedSteps}</p>
                       <p className="text-[10px] text-muted-foreground">Steps done</p>
                     </div>
                     <div className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-1">
-                        <TrendingUp className="w-5 h-5 text-gray-600" />
+                      <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-1">
+                        <TrendingUp className="w-5 h-5 text-emerald-500" />
                       </div>
                       <p className="text-lg font-bold text-gray-700">{score}</p>
                       <p className="text-[10px] text-muted-foreground">Points</p>
@@ -124,7 +124,7 @@ export default function ShareSheet() {
                     <Button
                       size="sm"
                       onClick={() => handleNativeShare(progressText)}
-                      className="flex-1 rounded-lg bg-gray-900 hover:bg-black text-white"
+                      className="flex-1 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white"
                     >
                       <Share2 className="w-3.5 h-3.5 mr-1.5" />
                       Share Progress

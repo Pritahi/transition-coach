@@ -254,8 +254,8 @@ export default function CreateAlarmSheet() {
                             onClick={() => handleTemplateSelect(template)}
                             className={`flex-shrink-0 flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border transition-all active:scale-[0.97] ${
                               selectedTemplate === `builtin-${template.name}`
-                                ? 'border-gray-900 bg-gray-50 shadow-sm'
-                                : 'border-border bg-background hover:border-gray-300'
+                                ? 'border-emerald-500 bg-emerald-50 shadow-sm'
+                                : 'border-border bg-background hover:border-emerald-300'
                             }`}
                           >
                             <span className="text-lg">{template.emoji}</span>
@@ -540,7 +540,7 @@ export default function CreateAlarmSheet() {
                       className="h-9 rounded-lg text-[13px] bg-background"
                     />
                     <Button onClick={handleSaveTemplate} disabled={!templateName.trim()}
-                      className="h-9 px-3 bg-gray-900 hover:bg-black text-white text-[12px] font-semibold rounded-lg disabled:opacity-30">
+                      className="h-9 px-3 bg-emerald-500 hover:bg-emerald-600 text-white text-[12px] font-semibold rounded-lg disabled:opacity-30">
                       Save
                     </Button>
                   </div>
@@ -554,7 +554,7 @@ export default function CreateAlarmSheet() {
             <Button
               onClick={handleSubmit}
               disabled={!isValid}
-              className="w-full h-[52px] bg-gray-900 hover:bg-black active:bg-gray-800 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-black/10 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98]"
+              className="w-full h-[52px] bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-emerald-500/20 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98]"
             >
               <Zap className="w-5 h-5 mr-2" />
               Create Alarm
