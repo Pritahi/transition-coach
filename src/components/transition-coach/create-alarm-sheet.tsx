@@ -197,10 +197,10 @@ export default function CreateAlarmSheet() {
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     onClick={() => setShowSaveTemplate(true)}
-                    className="w-8 h-8 rounded-full bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center active:scale-90 transition-transform"
+                    className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center active:scale-90 transition-transform"
                     title="Save as template"
                   >
-                    <Bookmark className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    <Bookmark className="w-4 h-4 text-gray-600" />
                   </motion.button>
                 )}
                 <button
@@ -254,8 +254,8 @@ export default function CreateAlarmSheet() {
                             onClick={() => handleTemplateSelect(template)}
                             className={`flex-shrink-0 flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border transition-all active:scale-[0.97] ${
                               selectedTemplate === `builtin-${template.name}`
-                                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 shadow-sm'
-                                : 'border-border bg-background hover:border-emerald-300'
+                                ? 'border-gray-900 bg-gray-50 shadow-sm'
+                                : 'border-border bg-background hover:border-gray-300'
                             }`}
                           >
                             <span className="text-lg">{template.emoji}</span>
@@ -291,7 +291,7 @@ export default function CreateAlarmSheet() {
                               key={template.id}
                               className={`flex items-center gap-3 p-2.5 rounded-xl border transition-all ${
                                 selectedTemplate === `custom-${template.id}`
-                                  ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
+                                  ? 'border-gray-900 bg-gray-50'
                                   : 'border-border bg-background'
                               }`}
                             >
@@ -347,7 +347,7 @@ export default function CreateAlarmSheet() {
                               onClick={() => handleHistoryReuse(entry)}
                               className={`w-full flex items-center gap-3 p-2.5 rounded-xl border transition-all active:scale-[0.98] ${
                                 selectedTemplate === `history-${entry.id}`
-                                  ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
+                                  ? 'border-gray-900 bg-gray-50'
                                   : 'border-border bg-background'
                               }`}
                             >
@@ -387,7 +387,7 @@ export default function CreateAlarmSheet() {
                   placeholder="e.g., Leave for College"
                   value={title}
                   onChange={(e) => { setTitle(e.target.value); setSelectedTemplate(null); setSubmitted(false); }}
-                  className={`h-11 rounded-xl text-[15px] bg-muted/40 border-border/60 focus:border-emerald-500 focus:ring-emerald-500/20 ${titleMissing ? 'border-red-400' : ''}`}
+                  className={`h-11 rounded-xl text-[15px] bg-muted/40 border-border/60 focus:border-gray-900 focus:ring-gray-900/20 ${titleMissing ? 'border-red-400' : ''}`}
                 />
               </div>
 
@@ -404,7 +404,7 @@ export default function CreateAlarmSheet() {
                   type="datetime-local"
                   value={finalTime}
                   onChange={(e) => { setFinalTime(e.target.value); setSubmitted(false); }}
-                  className={`h-11 rounded-xl text-[15px] bg-muted/40 border-border/60 focus:border-emerald-500 focus:ring-emerald-500/20 ${timeMissing ? 'border-red-400' : ''}`}
+                  className={`h-11 rounded-xl text-[15px] bg-muted/40 border-border/60 focus:border-gray-900 focus:ring-gray-900/20 ${timeMissing ? 'border-red-400' : ''}`}
                 />
               </div>
 
@@ -421,7 +421,7 @@ export default function CreateAlarmSheet() {
                   </div>
                   {steps.length < 5 && (
                     <button onClick={addStep}
-                      className="flex items-center gap-1 text-[12px] font-medium text-emerald-600 dark:text-emerald-400 active:scale-95 transition-transform">
+                      className="flex items-center gap-1 text-[12px] font-medium text-gray-700 active:scale-95 transition-transform">
                       <Plus className="w-3.5 h-3.5" /> Add
                     </button>
                   )}
@@ -449,15 +449,15 @@ export default function CreateAlarmSheet() {
                           <div className={`rounded-2xl border p-3.5 transition-colors ${isEmpty ? 'border-red-300 dark:border-red-800/50 bg-red-50/50 dark:bg-red-900/10' : 'border-border/60 bg-background'}`}>
                             <div className="flex items-center justify-between mb-2.5">
                               <div className="flex items-center gap-2">
-                                <div className={`w-6 h-6 rounded-full flex items-center justify-center ${step.label.trim() ? 'bg-emerald-100 dark:bg-emerald-900/30' : 'bg-muted'}`}>
-                                  <span className={`text-[11px] font-bold ${step.label.trim() ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground'}`}>
+                                <div className={`w-6 h-6 rounded-full flex items-center justify-center ${step.label.trim() ? 'bg-gray-100' : 'bg-muted'}`}>
+                                  <span className={`text-[11px] font-bold ${step.label.trim() ? 'text-gray-600' : 'text-muted-foreground'}`}>
                                     {step.label.trim() ? '✓' : index + 1}
                                   </span>
                                 </div>
                                 <span className="text-[13px] font-semibold text-foreground">
                                   {isLast ? 'Final Step' : `Step ${index + 1}`}
                                 </span>
-                                {step.label.trim() && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />}
+                                {step.label.trim() && <span className="w-1.5 h-1.5 rounded-full bg-gray-900" />}
                               </div>
                               {steps.length > 1 && (
                                 <button onClick={() => removeStep(index)}
@@ -471,7 +471,7 @@ export default function CreateAlarmSheet() {
                               placeholder="What to do?"
                               value={step.label}
                               onChange={(e) => updateStep(index, 'label', e.target.value)}
-                              className={`h-10 rounded-xl text-[14px] bg-muted/30 border-transparent focus:border-emerald-500/50 focus:bg-background ${isEmpty ? 'border-red-300 dark:border-red-800/50' : ''}`}
+                              className={`h-10 rounded-xl text-[14px] bg-muted/30 border-transparent focus:border-gray-900/50 focus:bg-background ${isEmpty ? 'border-red-300 dark:border-red-800/50' : ''}`}
                             />
 
                             <div className="flex items-center gap-2 mt-2">
@@ -484,7 +484,7 @@ export default function CreateAlarmSheet() {
                                   <div className="flex items-center gap-1 ml-auto">
                                     {[5, 10, 15, 20, 30].map((m) => (
                                       <button key={m} onClick={() => updateStep(index, 'minutesBefore', m)}
-                                        className={`w-7 h-6 rounded-md text-[11px] font-medium transition-all active:scale-90 ${step.minutesBefore === m ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
+                                        className={`w-7 h-6 rounded-md text-[11px] font-medium transition-all active:scale-90 ${step.minutesBefore === m ? 'bg-gray-100 text-gray-700' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
                                         {m}
                                       </button>
                                     ))}
@@ -517,17 +517,17 @@ export default function CreateAlarmSheet() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-shrink-0 border-t border-border/60 bg-amber-50 dark:bg-amber-900/10 px-5 py-3"
+                className="flex-shrink-0 border-t border-border/60 bg-gray-50 px-5 py-3"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <Bookmark className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  <span className="text-[13px] font-semibold text-amber-900 dark:text-amber-100">Save as Template</span>
+                  <Bookmark className="w-4 h-4 text-gray-600" />
+                  <span className="text-[13px] font-semibold text-gray-900">Save as Template</span>
                 </div>
                 <div className="flex gap-2">
                   <div className="flex gap-1 overflow-x-auto no-scrollbar">
                     {templateEmojis.map((e) => (
                       <button key={e} onClick={() => setTemplateEmoji(e)}
-                        className={`w-8 h-8 rounded-lg text-sm flex items-center justify-center flex-shrink-0 transition-all ${templateEmoji === e ? 'bg-amber-200 dark:bg-amber-800/40 scale-110' : 'bg-background hover:bg-amber-100 dark:hover:bg-amber-900/20'}`}>
+                        className={`w-8 h-8 rounded-lg text-sm flex items-center justify-center flex-shrink-0 transition-all ${templateEmoji === e ? 'bg-gray-200 scale-110' : 'bg-background hover:bg-gray-100'}`}>
                         {e}
                       </button>
                     ))}
@@ -540,7 +540,7 @@ export default function CreateAlarmSheet() {
                       className="h-9 rounded-lg text-[13px] bg-background"
                     />
                     <Button onClick={handleSaveTemplate} disabled={!templateName.trim()}
-                      className="h-9 px-3 bg-amber-500 hover:bg-amber-600 text-white text-[12px] font-semibold rounded-lg disabled:opacity-30">
+                      className="h-9 px-3 bg-gray-900 hover:bg-black text-white text-[12px] font-semibold rounded-lg disabled:opacity-30">
                       Save
                     </Button>
                   </div>
@@ -554,7 +554,7 @@ export default function CreateAlarmSheet() {
             <Button
               onClick={handleSubmit}
               disabled={!isValid}
-              className="w-full h-[52px] bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-emerald-500/20 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98]"
+              className="w-full h-[52px] bg-gray-900 hover:bg-black active:bg-gray-800 text-white text-[16px] font-semibold rounded-2xl shadow-lg shadow-black/10 disabled:opacity-30 disabled:shadow-none transition-all active:scale-[0.98]"
             >
               <Zap className="w-5 h-5 mr-2" />
               Create Alarm

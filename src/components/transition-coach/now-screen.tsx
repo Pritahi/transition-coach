@@ -101,7 +101,7 @@ function CountdownTimer({ seconds, onExpire }: { seconds: number; onExpire: () =
   return (
     <div className="mt-4">
       <div className="flex items-center justify-between mb-1.5">
-        <span className="text-emerald-100 text-xs font-medium flex items-center gap-1.5">
+        <span className="text-gray-300 text-xs font-medium flex items-center gap-1.5">
           <Timer className="w-3.5 h-3.5" />
           {remaining <= 0 ? "Time's up!" : 'Time remaining'}
         </span>
@@ -315,19 +315,19 @@ export default function NowScreen() {
             <div
               className={`text-white p-5 rounded-2xl shadow-lg transition-colors ${
                 timerActive
-                  ? 'bg-emerald-600 shadow-emerald-600/25'
-                  : 'bg-emerald-500 shadow-emerald-500/20'
+                  ? 'bg-gray-900 shadow-black/20'
+                  : 'bg-gray-800 shadow-black/20'
               }`}
             >
               {!timerActive && (
-                <div className="absolute inset-0 bg-emerald-400 rounded-2xl animate-pulse opacity-15" />
+                <div className="absolute inset-0 bg-gray-700 rounded-2xl animate-pulse opacity-15" />
               )}
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <Zap className="w-5 h-5 fill-current" />
-                    <span className="text-emerald-100 text-sm font-bold uppercase tracking-wider">
+                    <span className="text-gray-300 text-sm font-bold uppercase tracking-wider">
                       NOW
                     </span>
                   </div>
@@ -349,7 +349,7 @@ export default function NowScreen() {
                         IN PROGRESS
                       </motion.span>
                     ) : (
-                      <span className="bg-white/10 text-emerald-100 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      <span className="bg-white/10 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">
                         {formatCountdownPrecise(activeTask.step.scheduledTime)}
                       </span>
                     )}
@@ -362,7 +362,7 @@ export default function NowScreen() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 z-20 bg-emerald-700/95 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-5 gap-2.5"
+                      className="absolute inset-0 z-20 bg-gray-900/95 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-5 gap-2.5"
                     >
                       <Trash2 className="w-6 h-6 text-white/70" />
                       <p className="text-sm font-bold text-white">Delete this alarm?</p>
@@ -399,12 +399,12 @@ export default function NowScreen() {
                 </h1>
 
                 {/* Time pressure + alarm context */}
-                <div className="flex items-center gap-2 text-emerald-100">
+                <div className="flex items-center gap-2 text-gray-300">
                   <Clock className="w-3.5 h-3.5" />
                   <span className="text-sm font-medium">
                     {formatCountdown(activeTask.step.scheduledTime)} to act
                   </span>
-                  <span className="text-emerald-200/40">|</span>
+                  <span className="text-gray-400/40">|</span>
                   <span className="text-sm">{activeTask.alarm.title}</span>
                 </div>
 
@@ -416,10 +416,10 @@ export default function NowScreen() {
                     className="mt-2 flex items-center gap-1.5 bg-white/10 rounded-lg px-3 py-1.5"
                   >
                     <AlertTriangle className="w-3.5 h-3.5 text-amber-300" />
-                    <span className="text-xs font-bold text-amber-100">
+                    <span className="text-xs font-bold text-amber-300">
                       Only {timePressure.minutes} min left!
                     </span>
-                    <span className="text-[10px] text-emerald-200/70">
+                    <span className="text-[10px] text-gray-300/70">
                       {timePressure.msg}
                     </span>
                   </motion.div>
@@ -437,7 +437,7 @@ export default function NowScreen() {
                       <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={handleStart}
-                        className="flex-1 bg-white text-emerald-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-emerald-50 transition-colors shadow-lg shadow-black/10"
+                        className="flex-1 bg-white text-gray-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-gray-100 transition-colors shadow-lg shadow-black/10"
                       >
                         <Play className="w-5 h-5 fill-current" />
                         START NOW
@@ -451,14 +451,14 @@ export default function NowScreen() {
                           <SkipForward className="w-4 h-4" />
                           SKIP
                         </div>
-                        <span className="text-[9px] text-emerald-200/50">-3 pts</span>
+                        <span className="text-[9px] text-gray-400/60">-3 pts</span>
                       </motion.button>
                     </>
                   ) : (
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={handleManualComplete}
-                      className="flex-1 bg-white text-emerald-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-emerald-50 transition-colors shadow-lg shadow-black/10"
+                      className="flex-1 bg-white text-gray-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-gray-100 transition-colors shadow-lg shadow-black/10"
                     >
                       <CheckCircle2 className="w-5 h-5" />
                       DONE — NEXT
@@ -473,7 +473,7 @@ export default function NowScreen() {
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="text-xs text-emerald-200/80 text-center mt-2 italic"
+                      className="text-xs text-gray-300/80 text-center mt-2 italic"
                     >
                       {skipMsg}
                     </motion.p>
@@ -511,13 +511,13 @@ export default function NowScreen() {
             className="mx-4 mt-3 space-y-3"
           >
             {/* Main empty state — simplified */}
-            <div className="bg-muted/50 border-2 border-dashed border-muted-foreground/20 rounded-2xl p-5 text-center">
+            <div className="bg-white border border-gray-200 rounded-2xl p-5 text-center">
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center"
+                className="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center"
               >
-                <Zap className="w-7 h-7 text-emerald-500" />
+                <Zap className="w-7 h-7 text-gray-700" />
               </motion.div>
               <h2 className="text-lg font-bold mb-1">What should I do now?</h2>
               <p className="text-sm text-muted-foreground mb-4">
@@ -525,7 +525,7 @@ export default function NowScreen() {
               </p>
               <Button
                 onClick={() => setShowCreateAlarm(true)}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+                className="bg-gray-900 hover:bg-black text-white shadow-lg shadow-black/10"
               >
                 <Zap className="w-4 h-4 mr-1.5" />
                 Create Smart Alarm
@@ -536,20 +536,20 @@ export default function NowScreen() {
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => setCurrentView('waiting')}
-              className="w-full flex items-center gap-3 p-3.5 rounded-xl border border-amber-200 dark:border-amber-800/30 bg-amber-50 dark:bg-amber-900/10 hover:bg-amber-100 dark:hover:bg-amber-900/20 transition-colors text-left"
+              className="w-full flex items-center gap-3 p-3.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-colors text-left"
             >
-              <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/40 flex items-center justify-center flex-shrink-0">
-                <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 text-gray-600" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                <p className="text-sm font-semibold text-gray-900">
                   Got free time right now?
                 </p>
-                <p className="text-xs text-amber-600 dark:text-amber-400">
+                <p className="text-xs text-gray-500">
                   Turn dead time into done time
                 </p>
               </div>
-              <ArrowRight className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
             </motion.button>
           </motion.div>
         )}
@@ -564,22 +564,22 @@ export default function NowScreen() {
             exit={{ opacity: 0, y: 10 }}
             className="mx-4 mt-3"
           >
-            <div className="bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30 rounded-xl p-3 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                <Timer className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <div className="bg-white border border-gray-200 rounded-xl p-3 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                <Timer className="w-4 h-4 text-gray-600" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                <p className="text-sm font-semibold text-gray-900">
                   Still stuck?
                 </p>
-                <p className="text-xs text-amber-600 dark:text-amber-400">
+                <p className="text-xs text-gray-500">
                   Try 30 sec version of &ldquo;{activeTask.step.label}&rdquo;
                 </p>
               </div>
               <Button
                 size="sm"
                 onClick={handleStart}
-                className="bg-amber-500 hover:bg-amber-600 text-white rounded-lg h-8"
+                className="bg-gray-900 hover:bg-black text-white rounded-lg h-8"
               >
                 <Play className="w-3.5 h-3.5 mr-1" />
                 Go
@@ -637,21 +637,21 @@ export default function NowScreen() {
         >
           <button
             onClick={() => setCurrentView('waiting')}
-            className="w-full bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 rounded-xl p-3.5 text-left flex items-center gap-3 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+            className="w-full bg-white border border-gray-200 rounded-xl p-3.5 text-left flex items-center gap-3 hover:bg-gray-50 transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/40 flex items-center justify-center flex-shrink-0">
-              <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <Clock className="w-5 h-5 text-gray-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+              <p className="text-sm font-semibold text-gray-900">
                 {waitingMsg}
               </p>
-              <p className="text-xs text-amber-600 dark:text-amber-400 truncate">
+              <p className="text-xs text-gray-500 truncate">
                 {waitingSession!.tasks.filter((t) => !t.isCompleted).length} quick tasks until{' '}
                 {waitingSession!.eventTitle}
               </p>
             </div>
-            <ChevronRight className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
           </button>
         </motion.div>
       )}
@@ -718,17 +718,17 @@ export default function NowScreen() {
                 <Share2 className="w-3.5 h-3.5" />
               </button>
             </div>
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/20">
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-white border border-gray-200">
               {todayCompletedSteps >= 3 ? (
                 <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
                   <Flame className="w-6 h-6 text-orange-500" />
                 </div>
               ) : (
-                <CheckCircle2 className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+                <CheckCircle2 className="w-6 h-6 text-gray-600 flex-shrink-0" />
               )}
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+                  <p className="text-sm font-semibold text-gray-900">
                     {completedCount} of {totalCount} steps done
                   </p>
                   {todayCompletedSteps >= 3 && (
@@ -743,17 +743,17 @@ export default function NowScreen() {
                 </div>
                 {/* Score */}
                 <div className="flex items-center gap-3 mt-1.5">
-                  <div className="flex-1 h-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{
                         width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
                       }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="h-full bg-emerald-500 rounded-full"
+                      className="h-full bg-gray-800 rounded-full"
                     />
                   </div>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                  <span className="text-xs font-bold text-gray-700 tabular-nums">
                     {score} pts
                   </span>
                 </div>
@@ -762,7 +762,7 @@ export default function NowScreen() {
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 flex items-center gap-1"
+                    className="text-[10px] text-gray-500 mt-1 flex items-center gap-1"
                   >
                     <SkipForward className="w-3 h-3" />
                     {todaySkippedSteps} skipped today (-{todaySkippedSteps * 3} pts)
@@ -786,7 +786,7 @@ export default function NowScreen() {
             <button
               onClick={() => setAutoFlowEnabled(!autoFlowEnabled)}
               className={`relative w-10 h-6 rounded-full transition-colors ${
-                autoFlowEnabled ? 'bg-emerald-500' : 'bg-muted-foreground/30'
+                autoFlowEnabled ? 'bg-gray-900' : 'bg-muted-foreground/30'
               }`}
             >
               <motion.div

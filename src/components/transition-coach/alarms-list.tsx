@@ -158,9 +158,9 @@ export default function AlarmsList() {
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-900/20 flex items-center justify-center"
+              className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center"
             >
-              <Zap className="w-10 h-10 text-emerald-400" />
+              <Zap className="w-10 h-10 text-gray-500" />
             </motion.div>
             <h3 className="text-lg font-bold mb-1">No alarms yet</h3>
             <p className="text-sm text-muted-foreground mb-5 max-w-[240px] mx-auto leading-relaxed">
@@ -168,7 +168,7 @@ export default function AlarmsList() {
             </p>
             <Button
               onClick={() => setShowCreateAlarm(true)}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+              className="bg-gray-900 hover:bg-black text-white shadow-lg shadow-black/10"
               size="lg"
             >
               <Zap className="w-5 h-5 mr-2" />
@@ -192,7 +192,7 @@ export default function AlarmsList() {
         </div>
         <Button
           onClick={() => setShowCreateAlarm(true)}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-emerald-500/25"
+          className="bg-gray-900 hover:bg-black text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-black/10"
           size="icon"
         >
           <Plus className="w-5 h-5" />
@@ -207,10 +207,10 @@ export default function AlarmsList() {
             animate={{ opacity: 1, y: 0 }}
           >
             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <Zap className="w-3 h-3 text-emerald-500" />
+              <Zap className="w-3 h-3 text-gray-700" />
               Up Next
             </p>
-            <div className="relative bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 rounded-2xl shadow-lg shadow-emerald-500/20">
+            <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 text-white p-4 rounded-2xl shadow-lg shadow-black/20">
               {/* Delete button — top right corner */}
               <button
                 onClick={() => setConfirmDeleteId(nextAlarm.id)}
@@ -231,7 +231,7 @@ export default function AlarmsList() {
                     <div key={s.id} className="flex items-center gap-1">
                       <span className="text-xs font-medium flex items-center gap-0.5">
                         {s.isCompleted ? (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-200" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-gray-300" />
                         ) : null}
                         {s.label}
                       </span>
@@ -243,10 +243,10 @@ export default function AlarmsList() {
               </div>
 
               {/* Meta */}
-              <div className="flex items-center gap-2 text-emerald-100 text-xs mb-3">
+              <div className="flex items-center gap-2 text-gray-300 text-xs mb-3">
                 <Clock className="w-3.5 h-3.5" />
                 <span>{formatTime(nextAlarm.finalTime)}</span>
-                <span className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ml-auto">
+                <span className="bg-white/15 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ml-auto">
                   {formatCountdown(nextAlarm.finalTime)}
                 </span>
               </div>
@@ -255,7 +255,7 @@ export default function AlarmsList() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={() => handleStartAlarm(nextAlarm.id)}
-                className="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-black/10"
+                className="w-full bg-white text-gray-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-black/10 hover:bg-gray-100"
               >
                 <Play className="w-4 h-4 fill-current" />
                 Start Now
@@ -298,7 +298,7 @@ export default function AlarmsList() {
                       !alarm.isActive
                         ? 'border-muted bg-muted/30 opacity-60'
                         : status === 'completed'
-                        ? 'border-emerald-200 bg-emerald-50 dark:border-emerald-800/30 dark:bg-emerald-900/10'
+                        ? 'border-gray-200 bg-gray-50'
                         : 'border-border bg-card'
                     }`}
                   >
@@ -320,9 +320,9 @@ export default function AlarmsList() {
                         <div
                           className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
                             status === 'completed'
-                              ? 'bg-emerald-500 text-white'
+                              ? 'bg-gray-800 text-white'
                               : status === 'in-progress'
-                              ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600'
+                              ? 'bg-orange-50 text-orange-600'
                               : 'bg-muted text-muted-foreground'
                           }`}
                         >
@@ -345,7 +345,7 @@ export default function AlarmsList() {
                             <Clock className="w-3 h-3" />
                             <span>{formatTime(alarm.finalTime)}</span>
                             {status === 'in-progress' && (
-                              <span className="font-medium text-amber-600 dark:text-amber-400">
+                              <span className="font-medium text-orange-600">
                                 {completedCount}/{alarm.steps.length}
                               </span>
                             )}
@@ -397,7 +397,7 @@ export default function AlarmsList() {
                                     width: `${alarm.steps.length > 0 ? (completedCount / alarm.steps.length) * 100 : 0}%`,
                                   }}
                                   className={`h-full rounded-full ${
-                                    status === 'completed' ? 'bg-emerald-500' : 'bg-amber-500'
+                                    status === 'completed' ? 'bg-gray-800' : 'bg-orange-400'
                                   }`}
                                 />
                               </div>
@@ -416,7 +416,7 @@ export default function AlarmsList() {
                                   className="flex items-center gap-2.5 w-full p-2 rounded-xl hover:bg-muted/50 transition-colors text-left"
                                 >
                                   {step.isCompleted ? (
-                                    <CheckCircle2 className="w-4.5 h-4.5 text-emerald-500 flex-shrink-0" />
+                                    <CheckCircle2 className="w-4.5 h-4.5 text-gray-600 flex-shrink-0" />
                                   ) : (
                                     <Circle className="w-4.5 h-4.5 text-muted-foreground/50 flex-shrink-0" />
                                   )}
@@ -509,15 +509,15 @@ export default function AlarmsList() {
                       className="w-full p-3.5 text-left"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                          <Zap className="w-4 h-4 text-emerald-600" />
+                        <div className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                          <Zap className="w-4 h-4 text-gray-700" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-sm font-semibold truncate">{alarm.title}</h3>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
                             <Clock className="w-3 h-3" />
                             <span>{formatTime(alarm.finalTime)}</span>
-                            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                            <span className="text-gray-600 font-medium">
                               ({formatCountdown(alarm.finalTime)})
                             </span>
                           </div>
@@ -547,7 +547,7 @@ export default function AlarmsList() {
                         <Button
                           size="sm"
                           onClick={() => handleStartAlarm(alarm.id)}
-                          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-9 text-xs rounded-xl"
+                          className="w-full bg-gray-900 hover:bg-black text-white h-9 text-xs rounded-xl"
                         >
                           <Play className="w-3.5 h-3.5 mr-1 fill-current" />
                           Start Now — {nextIncomplete.label}
@@ -576,7 +576,7 @@ export default function AlarmsList() {
                                   className="flex items-center gap-2.5 w-full p-2 rounded-xl hover:bg-muted/50 transition-colors text-left"
                                 >
                                   {step.isCompleted ? (
-                                    <CheckCircle2 className="w-4.5 h-4.5 text-emerald-500 flex-shrink-0" />
+                                    <CheckCircle2 className="w-4.5 h-4.5 text-gray-600 flex-shrink-0" />
                                   ) : (
                                     <Circle className="w-4.5 h-4.5 text-muted-foreground/50 flex-shrink-0" />
                                   )}

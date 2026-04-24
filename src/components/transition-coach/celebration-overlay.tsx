@@ -78,7 +78,7 @@ export default function CelebrationOverlay() {
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: -20, scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25, delay: 0.1 }}
-            className="bg-background border border-emerald-200 dark:border-emerald-800/40 rounded-2xl shadow-2xl shadow-emerald-500/10 px-6 py-4 max-w-xs text-center"
+            className="bg-background border border-gray-200 rounded-2xl shadow-2xl shadow-black/10 px-6 py-4 max-w-xs text-center"
           >
             <div className="flex items-center justify-center gap-2 mb-2">
               <motion.div
@@ -86,7 +86,7 @@ export default function CelebrationOverlay() {
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', delay: 0.15 }}
               >
-                <PartyPopper className="w-7 h-7 text-emerald-500" />
+                <PartyPopper className="w-7 h-7 text-gray-700" />
               </motion.div>
               <motion.div
                 initial={{ scale: 0, rotate: 180 }}
@@ -110,7 +110,7 @@ export default function CelebrationOverlay() {
               transition={{ delay: 0.25 }}
             >
               <div className="flex items-center justify-center gap-1.5 mb-1">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <CheckCircle2 className="w-4 h-4 text-gray-700" />
                 <p className="text-base font-bold text-foreground">
                   {lastCompletedLabel}
                 </p>
@@ -121,7 +121,7 @@ export default function CelebrationOverlay() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
-              className="text-sm text-emerald-600 dark:text-emerald-400 font-medium"
+              className="text-sm text-gray-700 font-medium"
             >
               {message}
             </motion.p>

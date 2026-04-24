@@ -48,7 +48,7 @@ export default function TransitionCoach() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center animate-pulse">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-800 to-black flex items-center justify-center animate-pulse">
             <ZapIcon className="w-6 h-6 text-white" />
           </div>
           <p className="text-sm text-muted-foreground">Loading...</p>
@@ -68,7 +68,7 @@ export default function TransitionCoach() {
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-sm shadow-emerald-500/20">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-sm shadow-black/10">
               <ZapIcon className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-sm font-bold tracking-tight">Transition Coach</h1>
@@ -78,9 +78,9 @@ export default function TransitionCoach() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/30"
+                className="flex items-center gap-1 bg-white px-2 py-0.5 rounded-full border border-gray-200"
               >
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                <span className="text-[10px] font-bold text-gray-900 tabular-nums">
                   {score}
                 </span>
               </motion.div>
@@ -89,10 +89,10 @@ export default function TransitionCoach() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/30"
+                className="flex items-center gap-1 bg-white px-2 py-0.5 rounded-full border border-orange-200"
               >
                 <span className="text-xs">🔥</span>
-                <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+                <span className="text-[10px] font-bold text-orange-600 tabular-nums">
                   {todayCompletedSteps}
                 </span>
               </motion.div>

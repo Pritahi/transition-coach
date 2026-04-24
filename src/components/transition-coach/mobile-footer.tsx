@@ -71,17 +71,17 @@ export default function MobileFooter() {
         </div>
 
         {/* Stats Bar — iOS compact style */}
-        <div className="mb-0.5 rounded-xl bg-muted/40 backdrop-blur-sm border border-border/30 px-2.5 py-1.5">
+        <div className="mb-0.5 rounded-xl bg-gray-50 backdrop-blur-sm border border-gray-100 px-2.5 py-1.5">
           <div className="flex items-center justify-between gap-0.5">
             <div className="flex items-center gap-0.5 min-w-0">
-              <Zap className="w-3 h-3 text-emerald-500 flex-shrink-0" />
+              <Zap className="w-3 h-3 text-gray-700 flex-shrink-0" />
               <span className="text-[12px] font-bold text-foreground tabular-nums">{todayCompletedSteps}</span>
             </div>
 
             <div className="w-px h-3 bg-border/40" />
 
             <div className="flex items-center gap-0.5 min-w-0">
-              <TrendingUp className="w-3 h-3 text-amber-500 flex-shrink-0" />
+              <TrendingUp className="w-3 h-3 text-gray-700 flex-shrink-0" />
               <span className="text-[12px] font-bold text-foreground tabular-nums">{score}</span>
             </div>
 

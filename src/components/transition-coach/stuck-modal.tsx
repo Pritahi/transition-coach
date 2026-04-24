@@ -12,17 +12,17 @@ const difficultyConfig = {
     label: 'Easy',
     emoji: '🟢',
     description: '~2 min',
-    color: 'border-emerald-200 dark:border-emerald-800/30 bg-emerald-50 dark:bg-emerald-900/10 hover:border-emerald-400',
-    selectedColor: 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 ring-2 ring-emerald-500/30',
-    textColor: 'text-emerald-700 dark:text-emerald-300',
+    color: 'border-gray-200 bg-gray-50 hover:border-gray-400',
+    selectedColor: 'border-gray-800 bg-gray-50 ring-2 ring-gray-800/30',
+    textColor: 'text-gray-700',
   },
   medium: {
     label: 'Medium',
     emoji: '🟡',
     description: '~5 min',
-    color: 'border-amber-200 dark:border-amber-800/30 bg-amber-50 dark:bg-amber-900/10 hover:border-amber-400',
-    selectedColor: 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 ring-2 ring-amber-500/30',
-    textColor: 'text-amber-700 dark:text-amber-300',
+    color: 'border-gray-200 bg-gray-50 hover:border-gray-400',
+    selectedColor: 'border-gray-800 bg-gray-50 ring-2 ring-gray-800/30',
+    textColor: 'text-gray-700',
   },
   tiny: {
     label: 'Tiny',
@@ -160,7 +160,7 @@ export default function StuckModal() {
 
                           {/* Do it button */}
                           <div className="flex-shrink-0">
-                            <div className={`w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm`}>
+                            <div className={`w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center shadow-sm`}>
                               <CheckCircle2 className="w-4 h-4 text-white" />
                             </div>
                           </div>
@@ -183,7 +183,7 @@ export default function StuckModal() {
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', delay: 0.1, stiffness: 200 }}
                   >
-                    <Sparkles className="w-14 h-14 text-emerald-500 mx-auto mb-3" />
+                    <Sparkles className="w-14 h-14 text-gray-700 mx-auto mb-3" />
                   </motion.div>
                   <p className="text-lg font-bold mb-1">{completionMsg}</p>
                   <p className="text-sm text-muted-foreground">

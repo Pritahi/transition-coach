@@ -187,9 +187,9 @@ export default function WaitingMode() {
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 flex items-center justify-center"
+                    className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center"
                   >
-                    <Timer className="w-12 h-12 text-amber-500" />
+                    <Timer className="w-12 h-12 text-gray-600" />
                   </motion.div>
                   <h3 className="text-lg font-bold mb-1">
                     {timeAvailable > 0
@@ -250,11 +250,11 @@ export default function WaitingMode() {
                         exit={{ opacity: 0, y: 10, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30 rounded-xl p-4">
+                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
-                              <Zap className="w-4 h-4 text-amber-500" />
-                              <span className="text-sm font-bold text-amber-900 dark:text-amber-100">
+                              <Zap className="w-4 h-4 text-gray-500" />
+                              <span className="text-sm font-bold text-gray-900">
                                 {timeAvailable > 0
                                   ? `Here's what we'll do in ${timeAvailable} min:`
                                   : "Here's what we'll do:"}
@@ -268,15 +268,15 @@ export default function WaitingMode() {
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="flex items-center gap-3 p-2.5 rounded-lg bg-white/60 dark:bg-background/40"
+                                className="flex items-center gap-3 p-2.5 rounded-lg bg-white"
                               >
                                 <span className="text-lg">{task.emoji}</span>
-                                <span className="text-sm font-medium text-amber-900 dark:text-amber-100 flex-1">
+                                <span className="text-sm font-medium text-gray-800 flex-1">
                                   {task.label}
                                 </span>
                                 <Badge
                                   variant="outline"
-                                  className="text-[10px] text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700"
+                                  className="text-[10px] text-gray-600 border-gray-300"
                                 >
                                   ~{i < 2 ? '2 min' : '1 min'}
                                 </Badge>
@@ -284,9 +284,9 @@ export default function WaitingMode() {
                             ))}
                           </div>
                           {/* Energy indicator */}
-                          <div className="flex items-center gap-1.5 mt-3 pt-2 border-t border-amber-200/50 dark:border-amber-800/20">
-                            {(() => { const EIcon = energyIcons[energyMode]; return <EIcon className="w-3.5 h-3.5 text-amber-500" />; })()}
-                            <span className="text-xs text-amber-600/80 dark:text-amber-400/80">
+                          <div className="flex items-center gap-1.5 mt-3 pt-2 border-t border-gray-200/50">
+                            {(() => { const EIcon = energyIcons[energyMode]; return <EIcon className="w-3.5 h-3.5 text-gray-500" />; })()}
+                            <span className="text-xs text-gray-500">
                               {energyMessages[energyMode].hint}
                             </span>
                           </div>
@@ -298,7 +298,7 @@ export default function WaitingMode() {
                   <Button
                     onClick={handleStartWaiting}
                     disabled={!eventTitle.trim() || !eventTime}
-                    className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white text-base font-semibold rounded-xl disabled:opacity-40"
+                    className="w-full h-12 bg-gray-900 hover:bg-black text-white text-base font-semibold rounded-xl disabled:opacity-40"
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Start Now
@@ -316,13 +316,13 @@ export default function WaitingMode() {
               className="space-y-4"
             >
               {/* Event card with live countdown */}
-              <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800/30 rounded-2xl p-5">
+              <div className="bg-white border border-gray-200 rounded-2xl p-5">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
                       Waiting for
                     </p>
-                    <h3 className="text-lg font-bold text-amber-900 dark:text-amber-100">
+                    <h3 className="text-lg font-bold text-gray-900">
                       {waitingSession.eventTitle}
                     </h3>
                   </div>
@@ -330,7 +330,7 @@ export default function WaitingMode() {
                     variant="ghost"
                     size="icon"
                     onClick={endWaiting}
-                    className="h-8 w-8 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-800/30 rounded-full"
+                    className="h-8 w-8 text-gray-500 hover:bg-gray-100 rounded-full"
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -343,18 +343,18 @@ export default function WaitingMode() {
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
-                      <Clock className="w-4 h-4 text-amber-700 dark:text-amber-300" />
+                      <Clock className="w-4 h-4 text-gray-600" />
                     </motion.div>
-                    <span className="text-sm font-bold text-amber-900 dark:text-amber-100 tabular-nums">
+                    <span className="text-sm font-bold text-gray-900 tabular-nums">
                       {formatTimeUntilPrecise(waitingSession.eventTime)}
                     </span>
                   </div>
-                  <span className="text-amber-300">|</span>
-                  <span className="text-xs text-amber-600 dark:text-amber-400">
+                  <span className="text-gray-300">|</span>
+                  <span className="text-xs text-gray-500">
                     {formatTimeUntil(waitingSession.eventTime)} left
                   </span>
                   {/* TIME PRESSURE */}
-                  <Badge className="bg-amber-500 text-white border-0 text-[10px] font-bold ml-auto">
+                  <Badge className="bg-gray-900 text-white border-0 text-[10px] font-bold ml-auto">
                     {completedCount === 0 ? 'Start now!' : `${totalCount - completedCount} left`}
                   </Badge>
                 </div>
@@ -364,7 +364,7 @@ export default function WaitingMode() {
                   key={initialMsg}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-xs text-amber-600 dark:text-amber-400 mt-1.5 italic"
+                  className="text-xs text-gray-500 mt-1.5 italic"
                 >
                   {initialMsg}
                 </motion.p>
@@ -372,14 +372,14 @@ export default function WaitingMode() {
 
               {/* Progress */}
               <div className="flex items-center gap-3 px-1">
-                <div className="flex-1 h-2.5 bg-muted rounded-full overflow-hidden">
+                <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{
                       width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
                     }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-emerald-500 rounded-full"
+                    className="h-full bg-gray-800 rounded-full"
                   />
                 </div>
                 <span className="text-sm font-bold text-muted-foreground tabular-nums">
@@ -393,19 +393,19 @@ export default function WaitingMode() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200 }}
-                  className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 rounded-xl p-5 text-center"
+                  className="bg-white border border-gray-200 rounded-xl p-5 text-center"
                 >
                   <motion.div
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', delay: 0.1 }}
                   >
-                    <Sparkles className="w-10 h-10 text-emerald-500 mx-auto mb-2" />
+                    <Sparkles className="w-10 h-10 text-gray-600 mx-auto mb-2" />
                   </motion.div>
-                  <p className="font-bold text-emerald-900 dark:text-emerald-100 text-lg">
+                  <p className="font-bold text-gray-900 text-lg">
                     All done! You just unblocked your time.
                   </p>
-                  <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-1">
+                  <p className="text-sm text-gray-600 mt-1">
                     That&apos;s momentum. Ready for{' '}
                     <span className="font-semibold">{waitingSession.eventTitle}</span>?
                   </p>
@@ -439,8 +439,8 @@ export default function WaitingMode() {
                     disabled={task.isCompleted}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all relative overflow-hidden ${
                       task.isCompleted
-                        ? 'bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800/30'
-                        : 'bg-card border-border hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/5'
+                        ? 'bg-gray-50 border-gray-200'
+                        : 'bg-card border-border hover:border-gray-300 hover:shadow-lg hover:shadow-black/5'
                     }`}
                   >
                     <div className="absolute top-2 right-3">
@@ -452,8 +452,8 @@ export default function WaitingMode() {
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
                         task.isCompleted
-                          ? 'bg-emerald-500 text-white scale-110'
-                          : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'
+                          ? 'bg-gray-800 text-white scale-110'
+                          : 'bg-gray-100 text-gray-600'
                       }`}
                     >
                       {task.isCompleted ? (

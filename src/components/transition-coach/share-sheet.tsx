@@ -86,7 +86,7 @@ export default function ShareSheet() {
             <ScrollArea className="flex-1 px-5 pb-5">
               <div className="space-y-4">
                 {/* PERSONAL PROGRESS CARD */}
-                <div className="bg-gradient-to-br from-emerald-50 to-amber-50 dark:from-emerald-900/20 dark:to-amber-900/20 border border-emerald-200 dark:border-emerald-800/30 rounded-xl p-4">
+                <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Trophy className="w-5 h-5 text-amber-500" />
                     <span className="text-sm font-bold">Your Progress Today</span>
@@ -94,17 +94,17 @@ export default function ShareSheet() {
 
                   <div className="grid grid-cols-3 gap-3 mb-3">
                     <div className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-1">
-                        <Zap className="w-5 h-5 text-emerald-500" />
+                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-1">
+                        <Zap className="w-5 h-5 text-gray-600" />
                       </div>
-                      <p className="text-lg font-bold text-emerald-700 dark:text-emerald-400">{todayCompletedSteps}</p>
+                      <p className="text-lg font-bold text-gray-700">{todayCompletedSteps}</p>
                       <p className="text-[10px] text-muted-foreground">Steps done</p>
                     </div>
                     <div className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-1">
-                        <TrendingUp className="w-5 h-5 text-amber-500" />
+                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-1">
+                        <TrendingUp className="w-5 h-5 text-gray-600" />
                       </div>
-                      <p className="text-lg font-bold text-amber-700 dark:text-amber-400">{score}</p>
+                      <p className="text-lg font-bold text-gray-700">{score}</p>
                       <p className="text-[10px] text-muted-foreground">Points</p>
                     </div>
                     <div className="text-center">
@@ -124,7 +124,7 @@ export default function ShareSheet() {
                     <Button
                       size="sm"
                       onClick={() => handleNativeShare(progressText)}
-                      className="flex-1 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white"
+                      className="flex-1 rounded-lg bg-gray-900 hover:bg-black text-white"
                     >
                       <Share2 className="w-3.5 h-3.5 mr-1.5" />
                       Share Progress
@@ -137,8 +137,8 @@ export default function ShareSheet() {
                     >
                       {copiedId === 'progress' ? (
                         <>
-                          <Check className="w-3.5 h-3.5 mr-1.5 text-emerald-500" />
-                          <span className="text-emerald-500">Copied!</span>
+                          <Check className="w-3.5 h-3.5 mr-1.5 text-gray-600" />
+                          <span className="text-gray-600">Copied!</span>
                         </>
                       ) : (
                         <>
@@ -188,7 +188,7 @@ export default function ShareSheet() {
                               className="h-8 w-8 p-0"
                             >
                               {isCopied ? (
-                                <Check className="w-4 h-4 text-emerald-500" />
+                                <Check className="w-4 h-4 text-gray-600" />
                               ) : (
                                 <Copy className="w-4 h-4" />
                               )}

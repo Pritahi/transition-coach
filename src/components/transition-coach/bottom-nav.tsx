@@ -28,12 +28,12 @@ export default function BottomNav() {
             >
               <Icon
                 className={`w-[22px] h-[22px] transition-colors ${
-                  isActive ? 'text-emerald-500' : 'text-muted-foreground/50'
+                  isActive ? 'text-gray-900' : 'text-gray-300'
                 }`}
               />
               <span
                 className={`text-[10px] font-medium transition-colors ${
-                  isActive ? 'text-emerald-500' : 'text-muted-foreground/50'
+                  isActive ? 'text-gray-900' : 'text-gray-300'
                 }`}
               >
                 {tab.label}
