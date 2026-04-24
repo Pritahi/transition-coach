@@ -26,6 +26,7 @@ import EnergyModeSelector from '@/components/transition-coach/energy-mode-select
 import CelebrationOverlay from '@/components/transition-coach/celebration-overlay';
 import StuckModal from '@/components/transition-coach/stuck-modal';
 import ShareSheet from '@/components/transition-coach/share-sheet';
+import FeedbackSheet from '@/components/transition-coach/feedback-sheet';
 import MobileFooter from '@/components/transition-coach/mobile-footer';
 import OnboardingScreen from '@/components/transition-coach/onboarding-screen';
 
@@ -148,6 +149,7 @@ export default function TransitionCoach() {
       <CelebrationOverlay />
       <StuckModal />
       <ShareSheet />
+      <FeedbackSheet />
     </div>
   );
 }

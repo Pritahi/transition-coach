@@ -38,3 +38,11 @@ model Visitor {
   lastVisitAt   DateTime @default(now())
   visitCount    Int      @default(1)
 }
+
+model Feedback {
+  id          String   @id @default(cuid())
+  type        String   // "bug", "feature", "love", "other"
+  message     String
+  anonymousId String?
+  createdAt   DateTime @default(now())
+}

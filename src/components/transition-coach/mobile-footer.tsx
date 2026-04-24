@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, Zap, TrendingUp, Sparkles, Heart } from 'lucide-react';
+import { Flame, Zap, TrendingUp, Sparkles, Heart, MessageSquare } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 
 const footerQuotes = [
@@ -37,7 +37,7 @@ function useDailyQuote() {
 }
 
 export default function MobileFooter() {
-  const { todayCompletedSteps, todaySkippedSteps, lastCompletionDate, getTotalScore } = useStore();
+  const { todayCompletedSteps, todaySkippedSteps, lastCompletionDate, getTotalScore, setShowFeedbackSheet } = useStore();
   const { quote } = useDailyQuote();
   const score = getTotalScore();
 
@@ -98,6 +98,15 @@ export default function MobileFooter() {
               <Heart className="w-3 h-3 text-rose-400 flex-shrink-0" />
               <span className="text-[12px] font-bold text-foreground tabular-nums">{completionRate}%</span>
             </div>
+
+            <div className="w-px h-3 bg-border/40" />
+
+            <button
+              onClick={() => setShowFeedbackSheet(true)}
+              className="flex items-center gap-0.5 min-w-0 active:scale-95 transition-transform"
+            >
+              <MessageSquare className="w-3 h-3 text-blue-400 flex-shrink-0" />
+            </button>
           </div>
         </div>
       </div>

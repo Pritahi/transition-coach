@@ -93,6 +93,8 @@ interface AppState {
   setShowCreateAlarm: (show: boolean) => void;
   showShareSheet: boolean;
   setShowShareSheet: (show: boolean) => void;
+  showFeedbackSheet: boolean;
+  setShowFeedbackSheet: (show: boolean) => void;
 
   // I'm Stuck (3 options: easy/medium/tiny)
   stuckTasks: { label: string; emoji: string; difficulty: 'easy' | 'medium' | 'tiny' }[];
@@ -298,6 +300,8 @@ export const useStore = create<AppState>()(
       setShowCreateAlarm: (show) => set({ showCreateAlarm: show }),
       showShareSheet: false,
       setShowShareSheet: (show) => set({ showShareSheet: show }),
+      showFeedbackSheet: false,
+      setShowFeedbackSheet: (show) => set({ showFeedbackSheet: show }),
 
       // I'm Stuck — 3 options: easy, medium, tiny
       stuckTasks: [],
