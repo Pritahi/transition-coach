@@ -92,17 +92,17 @@ export default function AlarmsList() {
       {/* Header */}
       <div className="flex items-center justify-between p-4 pb-2">
         <div>
-          <h2 className="text-xl font-bold">Smart Alarms</h2>
+          <h2 className="text-lg font-semibold">Alarms</h2>
           <p className="text-sm text-muted-foreground">
-            {alarms.filter((a) => a.isActive).length} active · {alarms.length} total
+            {alarms.filter((a) => a.isActive).length} active
           </p>
         </div>
         <Button
           onClick={() => setShowCreateAlarm(true)}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-emerald-500/25"
-          size="icon"
+          size="sm"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4 mr-1" />
+          New
         </Button>
       </div>
 

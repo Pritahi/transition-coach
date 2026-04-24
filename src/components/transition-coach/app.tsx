@@ -1,7 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 
 // Hydration gate: true on client, false on server
@@ -46,65 +46,36 @@ export default function TransitionCoach() {
   if (!hydrated) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center animate-pulse">
-            <ZapIcon className="w-6 h-6 text-white" />
-          </div>
-          <p className="text-sm text-muted-foreground">Loading...</p>
-        </div>
+        <p className="text-sm text-muted-foreground">Loading...</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header - iOS Style */}
-      <header className="sticky top-0 z-40 bg-background/70 backdrop-blur-2xl">
-        <div className="max-w-lg mx-auto px-5 h-12 flex items-center justify-between">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
+        <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+          <h1 className="text-lg font-semibold tracking-tight">Transition Coach</h1>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-primary flex items-center justify-center shadow-sm">
-              <ZapIcon className="w-4.5 h-4.5 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-base font-semibold tracking-tight text-foreground">Transition Coach</h1>
-            </div>
-          </div>
-          <div className="flex items-center gap-2.5">
             {score > 0 && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full"
-              >
-                <span className="text-xs font-semibold text-primary tabular-nums">
-                  {score}
-                </span>
-              </motion.div>
+              <span className="text-sm font-medium text-muted-foreground tabular-nums">
+                {score} pts
+              </span>
             )}
-            {todayCompletedSteps >= 3 && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-orange-500/10 px-2.5 py-1.5 rounded-full"
-              >
-                <span className="text-xs font-semibold text-orange-500 tabular-nums">
-                  {todayCompletedSteps}
-                </span>
-              </motion.div>
+            {todayCompletedSteps > 0 && (
+              <span className="text-sm font-medium tabular-nums">
+                {todayCompletedSteps} done
+              </span>
             )}
           </div>
         </div>
 
-        {/* Energy Mode - iOS Segmented Control Style */}
+        {/* Energy Mode */}
         {currentView === 'now' && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="max-w-lg mx-auto px-5 pb-3"
-          >
+          <div className="max-w-lg mx-auto px-4 pb-3">
             <EnergyModeSelector />
-          </motion.div>
+          </div>
         )}
       </header>
 
