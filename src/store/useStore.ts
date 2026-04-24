@@ -35,6 +35,24 @@ export interface WaitingSession {
   tasks: WaitingTask[];
 }
 
+export interface CustomTemplate {
+  id: string;
+  name: string;
+  emoji: string;
+  steps: { label: string; minutesBefore: number }[];
+  createdAt: string;
+  usageCount: number;
+}
+
+export interface AlarmHistoryEntry {
+  id: string;
+  title: string;
+  steps: { label: string; minutesBefore: number }[];
+  completedAt: string;
+  totalSteps: number;
+  completedSteps: number;
+}
+
 export type ViewType = 'now' | 'alarms' | 'waiting';
 export type EnergyMode = 'low' | 'normal' | 'high';
 
@@ -90,6 +108,17 @@ interface AppState {
   lastCompletionDate: string | null;
   getTotalScore: () => number;
 
+  // Custom Templates
+  customTemplates: CustomTemplate[];
+  addCustomTemplate: (template: Omit<CustomTemplate, 'id' | 'createdAt' | 'usageCount'>) => void;
+  deleteCustomTemplate: (id: string) => void;
+  incrementTemplateUsage: (id: string) => void;
+
+  // Alarm History
+  alarmHistory: AlarmHistoryEntry[];
+  addToHistory: (entry: Omit<AlarmHistoryEntry, 'id' | 'completedAt'>) => void;
+  clearHistory: () => void;
+
   // Computed helpers
   getActiveTask: () => { alarm: SmartAlarm; step: AlarmStep } | null;
   getNextTask: () => { alarm: SmartAlarm; step: AlarmStep } | null;
@@ -118,8 +147,27 @@ export const useStore = create<AppState>()(
       alarms: [],
       addAlarm: (alarm) =>
         set((state) => ({ alarms: [alarm, ...state.alarms] })),
-      deleteAlarm: (id) =>
-        set((state) => ({ alarms: state.alarms.filter((a) => a.id !== id) })),
+      deleteAlarm: (id) => {
+        const state = get();
+        const alarm = state.alarms.find((a) => a.id === id);
+        // Save to history before deleting
+        if (alarm) {
+          const completedSteps = alarm.steps.filter((s) => s.isCompleted).length;
+          const stepsForHistory = [...alarm.steps]
+            .sort((a, b) => a.stepOrder - b.stepOrder)
+            .map((s) => ({
+              label: s.label,
+              minutesBefore: Math.max(0, Math.round((new Date(alarm.finalTime).getTime() - new Date(s.scheduledTime).getTime()) / 60000)),
+            }));
+          get().addToHistory({
+            title: alarm.title,
+            steps: stepsForHistory,
+            totalSteps: alarm.steps.length,
+            completedSteps,
+          });
+        }
+        set((state) => ({ alarms: state.alarms.filter((a) => a.id !== id) }));
+      },
       toggleAlarm: (id) =>
         set((state) => ({
           alarms: state.alarms.map((a) =>
@@ -154,6 +202,26 @@ export const useStore = create<AppState>()(
         } else {
           set({ todayCompletedSteps: state.todayCompletedSteps + 1 });
         }
+
+        // Check if alarm is fully completed — auto-save to history
+        if (alarm) {
+          const updatedAlarm = { ...alarm, steps: alarm.steps.map(s => s.id === stepId ? { ...s, isCompleted: true } : s) };
+          const allDone = updatedAlarm.steps.every(s => s.isCompleted);
+          if (allDone) {
+            const stepsForHistory = [...updatedAlarm.steps]
+              .sort((a, b) => a.stepOrder - b.stepOrder)
+              .map((s) => ({
+                label: s.label,
+                minutesBefore: Math.max(0, Math.round((new Date(alarm.finalTime).getTime() - new Date(s.scheduledTime).getTime()) / 60000)),
+              }));
+            get().addToHistory({
+              title: alarm.title,
+              steps: stepsForHistory,
+              totalSteps: alarm.steps.length,
+              completedSteps: alarm.steps.length,
+            });
+          }
+        }
       },
       uncompleteStep: (alarmId, stepId) =>
         set((state) => ({
@@ -169,7 +237,6 @@ export const useStore = create<AppState>()(
           ),
         })),
       skipStep: (alarmId, stepId) => {
-        // Skip = complete but counts as penalty
         const state = get();
         const alarm = state.alarms.find((a) => a.id === alarmId);
 
@@ -185,7 +252,7 @@ export const useStore = create<AppState>()(
               : a
           ),
           lastCompletedLabel: alarm?.steps.find((s) => s.id === stepId)?.label ?? null,
-          showCelebration: false, // No celebration for skip
+          showCelebration: false,
         }));
 
         const today = getTodayString();
@@ -268,6 +335,46 @@ export const useStore = create<AppState>()(
         const { todayCompletedSteps, todaySkippedSteps } = get();
         return todayCompletedSteps * 10 - todaySkippedSteps * 3;
       },
+
+      // Custom Templates
+      customTemplates: [],
+      addCustomTemplate: (template) =>
+        set((state) => ({
+          customTemplates: [
+            {
+              ...template,
+              id: generateId(),
+              createdAt: new Date().toISOString(),
+              usageCount: 0,
+            },
+            ...state.customTemplates,
+          ],
+        })),
+      deleteCustomTemplate: (id) =>
+        set((state) => ({
+          customTemplates: state.customTemplates.filter((t) => t.id !== id),
+        })),
+      incrementTemplateUsage: (id) =>
+        set((state) => ({
+          customTemplates: state.customTemplates.map((t) =>
+            t.id === id ? { ...t, usageCount: t.usageCount + 1 } : t
+          ),
+        })),
+
+      // Alarm History
+      alarmHistory: [],
+      addToHistory: (entry) =>
+        set((state) => ({
+          alarmHistory: [
+            {
+              ...entry,
+              id: generateId(),
+              completedAt: new Date().toISOString(),
+            },
+            ...state.alarmHistory,
+          ].slice(0, 50), // Keep last 50 entries
+        })),
+      clearHistory: () => set({ alarmHistory: [] }),
 
       // Computed helpers
       getActiveTask: () => {
