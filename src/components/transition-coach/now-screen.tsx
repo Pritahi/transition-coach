@@ -16,6 +16,7 @@ import {
   Brain,
   AlertTriangle,
   TrendingUp,
+  Trash2,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useStore } from '@/store/useStore';
@@ -143,6 +144,7 @@ export default function NowScreen() {
     getTotalScore,
     triggerStuckTask,
     setShowShareSheet,
+    deleteAlarm,
   } = useStore();
 
   const [timerActive, setTimerActive] = useState(false);
@@ -150,6 +152,7 @@ export default function NowScreen() {
   const [showDelayRescue, setShowDelayRescue] = useState(false);
   const [skipMsg, setSkipMsg] = useState('');
   const [tick, setTick] = useState(0); // force re-render for live countdown
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoFlowRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -171,6 +174,7 @@ export default function NowScreen() {
   // Delay rescue: show after 2 min if task not started
   useEffect(() => {
     if (activeTask && !timerActive) {
+      setShowDeleteConfirm(false);
       delayRef.current = setTimeout(() => {
         setShowDelayRescue(true);
         haptic('medium');
@@ -327,20 +331,68 @@ export default function NowScreen() {
                       NOW
                     </span>
                   </div>
-                  {timerActive ? (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full"
-                    >
-                      IN PROGRESS
-                    </motion.span>
-                  ) : (
-                    <span className="bg-white/10 text-emerald-100 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                      {formatCountdownPrecise(activeTask.step.scheduledTime)}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {!timerActive && !showDeleteConfirm && (
+                      <button
+                        onClick={() => setShowDeleteConfirm(true)}
+                        className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors active:scale-90"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                    {timerActive ? (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full"
+                      >
+                        IN PROGRESS
+                      </motion.span>
+                    ) : (
+                      <span className="bg-white/10 text-emerald-100 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        {formatCountdownPrecise(activeTask.step.scheduledTime)}
+                      </span>
+                    )}
                 </div>
+
+                {/* Delete confirmation overlay */}
+                <AnimatePresence>
+                  {showDeleteConfirm && activeTask && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-20 bg-emerald-700/95 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-5 gap-2.5"
+                    >
+                      <Trash2 className="w-6 h-6 text-white/70" />
+                      <p className="text-sm font-bold text-white">Delete this alarm?</p>
+                      <p className="text-[11px] text-white/60">
+                        &ldquo;{activeTask.alarm.title}&rdquo;
+                      </p>
+                      <div className="flex gap-2 w-full mt-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowDeleteConfirm(false)}
+                          className="flex-1 h-9 rounded-xl text-xs bg-white/15 hover:bg-white/25 text-white border-0"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            deleteAlarm(activeTask.alarm.id);
+                            setShowDeleteConfirm(false);
+                            haptic('medium');
+                          }}
+                          className="flex-1 h-9 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs"
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <h1 className="text-2xl md:text-3xl font-extrabold mb-1">
                   {activeTask.step.label}
@@ -447,6 +499,7 @@ export default function NowScreen() {
                     ))}
                 </div>
               </div>
+            </div>
             </div>
           </motion.div>
         ) : (
