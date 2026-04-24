@@ -277,7 +277,7 @@ export default function NowScreen() {
   }, [alarms, tick]);
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto">
+    <div className="flex flex-col">
       {/* HERO TAGLINE */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -657,7 +657,7 @@ export default function NowScreen() {
       )}
 
       {/* Content area */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="p-4">
         {/* COMING UP — next steps from all alarms */}
         {comingUp.length > 0 && (
           <motion.div

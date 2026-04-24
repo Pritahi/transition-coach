@@ -163,7 +163,7 @@ export default function WaitingMode() {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       <div className="p-4 pb-2">
         <h2 className="text-xl font-bold">Waiting Mode</h2>
         <p className="text-sm text-muted-foreground">
@@ -171,7 +171,7 @@ export default function WaitingMode() {
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-4">
+      <div className="px-4 pb-4">
         <AnimatePresence mode="wait">
           {!waitingSession?.isActive ? (
             <motion.div

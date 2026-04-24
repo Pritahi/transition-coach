@@ -148,12 +148,12 @@ export default function AlarmsList() {
   // --- Empty State ---
   if (sortedAlarms.length === 0) {
     return (
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col">
         <div className="p-4 pb-2">
           <h2 className="text-xl font-bold">Alarms</h2>
           <p className="text-sm text-muted-foreground">Your flows live here</p>
         </div>
-        <div className="flex-1 flex items-center justify-center px-4">
+        <div className="flex items-center justify-center px-4 min-h-[50vh]">
           <div className="text-center">
             <motion.div
               animate={{ y: [0, -8, 0] }}
@@ -181,7 +181,7 @@ export default function AlarmsList() {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 pb-2">
         <div>
@@ -199,7 +199,7 @@ export default function AlarmsList() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
+      <div className="px-4 pb-4 space-y-3">
         {/* NEXT ALARM — Hero Card with Delete */}
         {nextAlarm && (
           <motion.div

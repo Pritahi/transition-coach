@@ -114,7 +114,7 @@ export default function TransitionCoach() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-lg mx-auto w-full pb-52">
+      <main className="flex-1 max-w-lg mx-auto w-full overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentView}
@@ -122,7 +122,7 @@ export default function TransitionCoach() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.15 }}
-            className="h-full"
+            className="h-full overflow-y-auto pb-44"
           >
             {currentView === 'now' && <NowScreen />}
             {currentView === 'alarms' && <AlarmsList />}
