@@ -6,23 +6,18 @@ import {
   Clock,
   CheckCircle2,
   ChevronRight,
-  ArrowRight,
   Play,
   SkipForward,
-  Flame,
   Timer,
-  Sparkles,
   Share2,
   Brain,
   AlertTriangle,
-  TrendingUp,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import {
   estimateStepDuration,
-  getRandomEncouragement,
   getRandomWaitingMsg,
   getRandomPressureMsg,
   getRandomSkipMsg,
@@ -99,24 +94,21 @@ function CountdownTimer({ seconds, onExpire }: { seconds: number; onExpire: () =
 
   return (
     <div className="mt-4">
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-emerald-100 text-xs font-medium flex items-center gap-1.5">
-          <Timer className="w-3.5 h-3.5" />
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-primary-foreground/70 text-xs font-medium">
           {remaining <= 0 ? "Time's up!" : 'Time remaining'}
         </span>
         <span
-          className={`text-lg font-mono font-bold tabular-nums ${
-            isCritical ? 'text-red-200 animate-pulse' : isLow ? 'text-red-200' : 'text-white'
+          className={`text-xl font-semibold tabular-nums ${
+            isCritical ? 'opacity-50' : isLow ? 'opacity-70' : ''
           }`}
         >
           {String(minutes).padStart(2, '0')}:{String(secs).padStart(2, '0')}
         </span>
       </div>
-      <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-primary-foreground/20 rounded-full overflow-hidden">
         <motion.div
-          className={`h-full rounded-full transition-colors ${
-            isCritical ? 'bg-red-400' : isLow ? 'bg-amber-400' : 'bg-white/80'
-          }`}
+          className="h-full rounded-full bg-primary-foreground/80"
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5 }}
         />
@@ -153,8 +145,6 @@ export default function NowScreen() {
   const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoFlowRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Memoize the motivational message so it doesn't change on re-render
-  const motivationalMsg = useMemo(() => getRandomEncouragement(), []);
   const waitingMsg = useMemo(() => getRandomWaitingMsg(), []);
 
   const activeTask = getActiveTask();
@@ -274,101 +264,59 @@ export default function NowScreen() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* HERO TAGLINE */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="px-4 pt-3 text-center"
-      >
-        <p className="text-xs font-semibold text-muted-foreground tracking-wide">
-          Stop overthinking. Start next step.
-        </p>
-      </motion.div>
-
-      {/* Motivational strip */}
-      <motion.div
-        key={motivationalMsg}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="px-4 pt-1"
-      >
-        <p className="text-[11px] text-muted-foreground/70 text-center italic">
-          &ldquo;{motivationalMsg}&rdquo;
-        </p>
-      </motion.div>
-
-      {/* NOW BAR */}
+      {/* NOW BAR - iOS Card Style */}
       <AnimatePresence mode="wait">
         {activeTask ? (
           <motion.div
             key={activeTask.step.id}
-            initial={{ opacity: 0, y: -20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            transition={{ duration: 0.3 }}
-            className="relative overflow-hidden mx-4 mt-3"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="mx-5 mt-4"
           >
-            <div
-              className={`text-white p-5 rounded-2xl shadow-lg transition-colors ${
-                timerActive
-                  ? 'bg-emerald-600 shadow-emerald-600/25'
-                  : 'bg-emerald-500 shadow-emerald-500/20'
-              }`}
-            >
-              {!timerActive && (
-                <div className="absolute inset-0 bg-emerald-400 rounded-2xl animate-pulse opacity-15" />
-              )}
-
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-2">
+            <div className="bg-card rounded-3xl shadow-sm border border-border/50 overflow-hidden">
+              {/* Header */}
+              <div className="bg-primary p-5 text-primary-foreground">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Zap className="w-5 h-5 fill-current" />
-                    <span className="text-emerald-100 text-sm font-bold uppercase tracking-wider">
-                      NOW
+                    <Zap className="w-4 h-4" />
+                    <span className="text-xs font-semibold uppercase tracking-wider opacity-80">
+                      Now
                     </span>
                   </div>
                   {timerActive ? (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full"
-                    >
-                      IN PROGRESS
-                    </motion.span>
+                    <span className="bg-primary-foreground/20 text-xs font-medium px-2.5 py-1 rounded-full">
+                      In Progress
+                    </span>
                   ) : (
-                    <span className="bg-white/10 text-emerald-100 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    <span className="bg-primary-foreground/10 text-xs font-medium px-2.5 py-1 rounded-full">
                       {formatCountdownPrecise(activeTask.step.scheduledTime)}
                     </span>
                   )}
                 </div>
 
-                <h1 className="text-2xl md:text-3xl font-extrabold mb-1">
+                <h1 className="text-xl font-semibold mb-2 text-balance">
                   {activeTask.step.label}
                 </h1>
 
-                {/* Time pressure + alarm context */}
-                <div className="flex items-center gap-2 text-emerald-100">
+                <div className="flex items-center gap-2 text-primary-foreground/70 text-sm">
                   <Clock className="w-3.5 h-3.5" />
-                  <span className="text-sm font-medium">
-                    {formatCountdown(activeTask.step.scheduledTime)} to act
-                  </span>
-                  <span className="text-emerald-200/40">|</span>
-                  <span className="text-sm">{activeTask.alarm.title}</span>
+                  <span>{formatCountdown(activeTask.step.scheduledTime)}</span>
+                  <span className="opacity-30">|</span>
+                  <span>{activeTask.alarm.title}</span>
                 </div>
 
                 {/* Time pressure warning */}
                 {timePressure && !timerActive && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="mt-2 flex items-center gap-1.5 bg-white/10 rounded-lg px-3 py-1.5"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mt-3 flex items-center gap-2 bg-primary-foreground/10 rounded-xl px-3 py-2"
                   >
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-300" />
-                    <span className="text-xs font-bold text-amber-100">
-                      Only {timePressure.minutes} min left!
-                    </span>
-                    <span className="text-[10px] text-emerald-200/70">
-                      {timePressure.msg}
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    <span className="text-xs font-medium">
+                      {timePressure.minutes} min left
                     </span>
                   </motion.div>
                 )}
@@ -378,75 +326,71 @@ export default function NowScreen() {
                   <CountdownTimer seconds={timerSeconds} onExpire={handleTimerExpire} />
                 )}
 
-                {/* Action buttons */}
-                <div className="mt-4 flex gap-2">
-                  {!timerActive ? (
-                    <>
-                      <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        onClick={handleStart}
-                        className="flex-1 bg-white text-emerald-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-emerald-50 transition-colors shadow-lg shadow-black/10"
-                      >
-                        <Play className="w-5 h-5 fill-current" />
-                        START NOW
-                      </motion.button>
-                      <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        onClick={handleSkip}
-                        className="px-3 bg-white/15 hover:bg-white/25 text-white font-medium py-3 rounded-xl flex flex-col items-center justify-center gap-0.5 text-xs transition-colors"
-                      >
-                        <div className="flex items-center gap-1">
-                          <SkipForward className="w-4 h-4" />
-                          SKIP
-                        </div>
-                        <span className="text-[9px] text-emerald-200/50">-3 pts</span>
-                      </motion.button>
-                    </>
-                  ) : (
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      onClick={handleManualComplete}
-                      className="flex-1 bg-white text-emerald-600 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm hover:bg-emerald-50 transition-colors shadow-lg shadow-black/10"
-                    >
-                      <CheckCircle2 className="w-5 h-5" />
-                      DONE — NEXT
-                    </motion.button>
-                  )}
-                </div>
-
-                {/* Skip message feedback */}
-                <AnimatePresence>
-                  {skipMsg && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className="text-xs text-emerald-200/80 text-center mt-2 italic"
-                    >
-                      {skipMsg}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-
                 {/* Progress dots */}
-                <div className="mt-3 flex items-center gap-1.5">
+                <div className="mt-4 flex items-center gap-1">
                   {activeTask.alarm.steps
                     .sort((a, b) => a.stepOrder - b.stepOrder)
                     .map((s) => (
-                      <motion.div
+                      <div
                         key={s.id}
-                        animate={{ scale: s.id === activeTask.step.id ? 1.1 : 1 }}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                        className={`h-1 rounded-full transition-all duration-300 ${
                           s.isCompleted
-                            ? 'bg-white w-8'
+                            ? 'bg-primary-foreground w-6'
                             : s.id === activeTask.step.id
-                            ? 'bg-white/90 w-8'
-                            : 'bg-white/30 w-4'
+                            ? 'bg-primary-foreground/80 w-6'
+                            : 'bg-primary-foreground/20 w-3'
                         }`}
                       />
                     ))}
                 </div>
               </div>
+
+              {/* Actions */}
+              <div className="p-4 flex gap-3">
+                {!timerActive ? (
+                  <>
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleStart}
+                      className="flex-1 bg-primary text-primary-foreground font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm active:bg-primary/90 transition-colors"
+                    >
+                      <Play className="w-4 h-4" />
+                      Start
+                    </motion.button>
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleSkip}
+                      className="px-5 bg-secondary text-secondary-foreground font-medium py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm transition-colors"
+                    >
+                      <SkipForward className="w-4 h-4" />
+                      Skip
+                    </motion.button>
+                  </>
+                ) : (
+                  <motion.button
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleManualComplete}
+                    className="flex-1 bg-primary text-primary-foreground font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    Done
+                  </motion.button>
+                )}
+              </div>
+
+              {/* Skip message feedback */}
+              <AnimatePresence>
+                {skipMsg && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-xs text-muted-foreground text-center pb-3"
+                  >
+                    {skipMsg}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         ) : (
@@ -455,39 +399,35 @@ export default function NowScreen() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mx-4 mt-3"
+            className="mx-5 mt-4"
           >
-            <div className="bg-muted/50 border-2 border-dashed border-muted-foreground/20 rounded-2xl p-6 text-center">
+            <div className="bg-card rounded-3xl border border-border/50 p-8 text-center">
               <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-16 h-16 mx-auto mb-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center"
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center"
               >
-                <Zap className="w-8 h-8 text-emerald-500" />
+                <Zap className="w-7 h-7 text-primary" />
               </motion.div>
-              <h2 className="text-lg font-bold mb-1">Ready when you are</h2>
-              <p className="text-sm text-muted-foreground mb-1">
-                {motivationalMsg}
+              <h2 className="text-lg font-semibold mb-1">Ready when you are</h2>
+              <p className="text-sm text-muted-foreground mb-5">
+                Create an alarm or start waiting mode
               </p>
-              <p className="text-xs text-muted-foreground mb-4">
-                Create a smart alarm or start waiting mode
-              </p>
-              <div className="flex gap-2 justify-center">
+              <div className="flex gap-3 justify-center">
                 <Button
                   onClick={() => setShowCreateAlarm(true)}
-                  size="sm"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                  className="rounded-2xl px-5"
                 >
-                  <Zap className="w-4 h-4 mr-1" />
+                  <Zap className="w-4 h-4 mr-1.5" />
                   Create Alarm
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
+                  variant="secondary"
                   onClick={() => setCurrentView('waiting')}
+                  className="rounded-2xl px-5"
                 >
-                  <Clock className="w-4 h-4 mr-1" />
-                  Waiting Mode
+                  <Clock className="w-4 h-4 mr-1.5" />
+                  Waiting
                 </Button>
               </div>
             </div>
@@ -495,110 +435,92 @@ export default function NowScreen() {
         )}
       </AnimatePresence>
 
-      {/* DELAY RESCUE */}
+      {/* DELAY RESCUE - iOS Style */}
       <AnimatePresence>
         {showDelayRescue && activeTask && !timerActive && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="mx-4 mt-3"
+            className="mx-5 mt-3"
           >
-            <div className="bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30 rounded-xl p-3 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                <Timer className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <div className="bg-card rounded-2xl border border-border/50 p-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+                <Timer className="w-5 h-5 text-orange-500" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
-                  Still stuck?
-                </p>
-                <p className="text-xs text-amber-600 dark:text-amber-400">
-                  Try 30 sec version of &ldquo;{activeTask.step.label}&rdquo;
-                </p>
+                <p className="text-sm font-semibold">Still stuck?</p>
+                <p className="text-xs text-muted-foreground">Try a quick 30 sec version</p>
               </div>
               <Button
                 size="sm"
                 onClick={handleStart}
-                className="bg-amber-500 hover:bg-amber-600 text-white rounded-lg h-8"
+                className="rounded-xl"
               >
-                <Play className="w-3.5 h-3.5 mr-1" />
                 Go
               </Button>
-              <button
-                onClick={() => setShowDelayRescue(false)}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <span className="sr-only">Dismiss</span>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
-              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* I'M STUCK BUTTON — Anti-overthinking */}
+      {/* I'M STUCK BUTTON - iOS Style */}
       {!timerActive && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mx-4 mt-3"
+          transition={{ delay: 0.2 }}
+          className="mx-5 mt-3"
         >
           <motion.button
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => {
               triggerStuckTask();
               haptic('medium');
             }}
-            className="w-full flex items-center gap-3 p-3.5 rounded-xl border border-dashed border-muted-foreground/30 bg-muted/20 hover:bg-muted/40 transition-colors"
+            className="w-full flex items-center gap-3 p-4 rounded-2xl bg-card border border-border/50 active:bg-secondary transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center flex-shrink-0">
-              <Brain className="w-5 h-5 text-rose-500" />
+            <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
+              <Brain className="w-5 h-5 text-muted-foreground" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-sm font-bold text-rose-700 dark:text-rose-400">
-                I&apos;m Stuck
-              </p>
-              <p className="text-[11px] text-muted-foreground">
-                Tap and we&apos;ll give you one thing to do right now
-              </p>
+              <p className="text-sm font-semibold">I&apos;m Stuck</p>
+              <p className="text-xs text-muted-foreground">Get one simple action to do now</p>
             </div>
-            <Sparkles className="w-4 h-4 text-rose-300" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground" />
           </motion.button>
         </motion.div>
       )}
 
-      {/* WAITING MODE BANNER */}
+      {/* WAITING MODE BANNER - iOS Style */}
       {hasWaitingTasks && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="mx-4 mt-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mx-5 mt-3"
         >
           <button
             onClick={() => setCurrentView('waiting')}
-            className="w-full bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 rounded-xl p-3.5 text-left flex items-center gap-3 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+            className="w-full bg-card rounded-2xl border border-border/50 p-4 text-left flex items-center gap-3 active:bg-secondary transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800/40 flex items-center justify-center flex-shrink-0">
-              <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+              <Clock className="w-5 h-5 text-orange-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
-                {waitingMsg}
-              </p>
-              <p className="text-xs text-amber-600 dark:text-amber-400 truncate">
-                {waitingSession!.tasks.filter((t) => !t.isCompleted).length} quick tasks until{' '}
+              <p className="text-sm font-semibold">{waitingMsg}</p>
+              <p className="text-xs text-muted-foreground truncate">
+                {waitingSession!.tasks.filter((t) => !t.isCompleted).length} tasks until{' '}
                 {waitingSession!.eventTitle}
               </p>
             </div>
-            <ChevronRight className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
           </button>
         </motion.div>
       )}
 
-      {/* Content area */}
-      <div className="flex-1 p-4 overflow-y-auto">
-        {/* COMING UP — next steps from all alarms */}
+      {/* Content area - iOS Style */}
+      <div className="flex-1 px-5 pt-4 pb-40 overflow-y-auto">
+        {/* COMING UP */}
         {comingUp.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -606,28 +528,21 @@ export default function NowScreen() {
             transition={{ delay: 0.1 }}
             className="mb-4"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                Coming Up
-              </span>
-              <div className="flex-1 h-px bg-border" />
-            </div>
-            <div className="space-y-2">
-              {comingUp.map((item, i) => (
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 px-1">
+              Coming Up
+            </p>
+            <div className="bg-card rounded-2xl border border-border/50 divide-y divide-border/50">
+              {comingUp.map((item) => (
                 <div
                   key={`${item.alarm.id}-${item.step.id}`}
-                  className="flex items-center gap-3 p-2.5 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors"
+                  className="flex items-center gap-3 p-3.5"
                 >
-                  <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                    <span className="text-[10px] font-bold text-muted-foreground">{i + 1}</span>
-                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{item.step.label}</p>
-                    <p className="text-[10px] text-muted-foreground">{item.alarm.title}</p>
+                    <p className="text-xs text-muted-foreground">{item.alarm.title}</p>
                   </div>
                   <span className={`text-xs font-medium tabular-nums flex-shrink-0 ${
-                    item.timeLabel === 'Overdue' ? 'text-red-500' : 'text-muted-foreground'
+                    item.timeLabel === 'Overdue' ? 'text-destructive' : 'text-muted-foreground'
                   }`}>
                     {item.timeLabel}
                   </span>
@@ -637,105 +552,79 @@ export default function NowScreen() {
           </motion.div>
         )}
 
-        {/* TODAY'S PROGRESS — with score */}
+        {/* TODAY'S PROGRESS */}
         {(completedCount > 0 || todayCompletedSteps > 0) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mt-4"
+            className="mb-4"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="flex items-center justify-between mb-2 px-1">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Today&apos;s Progress
-              </span>
-              <div className="flex-1 h-px bg-border" />
+              </p>
               <button
                 onClick={() => setShowShareSheet(true)}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground active:text-foreground transition-colors p-1"
                 title="Share your flow"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/20">
-              {todayCompletedSteps >= 3 ? (
-                <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
-                  <Flame className="w-6 h-6 text-orange-500" />
-                </div>
-              ) : (
-                <CheckCircle2 className="w-6 h-6 text-emerald-500 flex-shrink-0" />
-              )}
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
-                    {completedCount} of {totalCount} steps done
-                  </p>
-                  {todayCompletedSteps >= 3 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="text-xs font-bold text-orange-600 dark:text-orange-400"
-                    >
-                      {todayCompletedSteps} today!
-                    </motion.span>
-                  )}
-                </div>
-                {/* Score */}
-                <div className="flex items-center gap-3 mt-1.5">
-                  <div className="flex-1 h-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{
-                        width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
-                      }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="h-full bg-emerald-500 rounded-full"
-                    />
-                  </div>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
-                    {score} pts
-                  </span>
-                </div>
-                {/* Skip penalty indicator */}
-                {todaySkippedSteps > 0 && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 flex items-center gap-1"
-                  >
-                    <SkipForward className="w-3 h-3" />
-                    {todaySkippedSteps} skipped today (-{todaySkippedSteps * 3} pts)
-                  </motion.p>
-                )}
+            <div className="bg-card rounded-2xl border border-border/50 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold">
+                  {completedCount} of {totalCount} steps
+                </p>
+                <span className="text-sm font-semibold text-primary tabular-nums">
+                  {score} pts
+                </span>
               </div>
+              <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{
+                    width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
+                  }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  className="h-full bg-primary rounded-full"
+                />
+              </div>
+              {todaySkippedSteps > 0 && (
+                <p className="text-xs text-muted-foreground mt-2">
+                  {todaySkippedSteps} skipped (-{todaySkippedSteps * 3} pts)
+                </p>
+              )}
             </div>
           </motion.div>
         )}
 
-        {/* Auto Flow Toggle */}
-        <div className="mt-5">
-          <label className="flex items-center justify-between p-3 rounded-xl bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors">
-            <div className="flex items-center gap-2.5">
-              <Zap className="w-4 h-4 text-muted-foreground" />
+        {/* Auto Flow Toggle - iOS Style */}
+        <div className="bg-card rounded-2xl border border-border/50 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Zap className="w-4 h-4 text-primary" />
+              </div>
               <div>
                 <p className="text-sm font-medium">Auto Flow</p>
-                <p className="text-xs text-muted-foreground">Auto-start next step timer</p>
+                <p className="text-xs text-muted-foreground">Auto-start next timer</p>
               </div>
             </div>
             <button
               onClick={() => setAutoFlowEnabled(!autoFlowEnabled)}
-              className={`relative w-10 h-6 rounded-full transition-colors ${
-                autoFlowEnabled ? 'bg-emerald-500' : 'bg-muted-foreground/30'
+              className={`relative w-[51px] h-[31px] rounded-full transition-colors ${
+                autoFlowEnabled ? 'bg-primary' : 'bg-secondary'
               }`}
             >
               <motion.div
-                animate={{ x: autoFlowEnabled ? 16 : 2 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                className="absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm"
+                animate={{ x: autoFlowEnabled ? 22 : 2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                className="absolute top-[2px] w-[27px] h-[27px] rounded-full bg-card shadow-sm"
               />
             </button>
-          </label>
+          </div>
         </div>
       </div>
     </div>

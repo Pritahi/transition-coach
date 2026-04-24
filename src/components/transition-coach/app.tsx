@@ -58,29 +58,26 @@ export default function TransitionCoach() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-sm shadow-emerald-500/20">
-              <ZapIcon className="w-4 h-4 text-white" />
+      {/* Header - iOS Style */}
+      <header className="sticky top-0 z-40 bg-background/70 backdrop-blur-2xl">
+        <div className="max-w-lg mx-auto px-5 h-12 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-2xl bg-primary flex items-center justify-center shadow-sm">
+              <ZapIcon className="w-4.5 h-4.5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-sm font-bold leading-tight tracking-tight">Transition Coach</h1>
-              <p className="text-[10px] text-muted-foreground leading-tight">
-                ADHD day-unfreezing tool
-              </p>
+              <h1 className="text-base font-semibold tracking-tight text-foreground">Transition Coach</h1>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             {score > 0 && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/30"
+                className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full"
               >
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
-                  {score} pts
+                <span className="text-xs font-semibold text-primary tabular-nums">
+                  {score}
                 </span>
               </motion.div>
             )}
@@ -88,29 +85,23 @@ export default function TransitionCoach() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-orange-50 dark:bg-orange-900/20 px-2 py-1 rounded-full border border-orange-200 dark:border-orange-800/30"
+                className="flex items-center gap-1 bg-orange-500/10 px-2.5 py-1.5 rounded-full"
               >
-                <span className="text-xs">🔥</span>
-                <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+                <span className="text-xs font-semibold text-orange-500 tabular-nums">
                   {todayCompletedSteps}
                 </span>
               </motion.div>
             )}
-            <motion.div
-              animate={{ opacity: [1, 0.4, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-2 h-2 rounded-full bg-emerald-500"
-            />
           </div>
         </div>
 
-        {/* Energy Mode — only on NOW screen */}
+        {/* Energy Mode - iOS Segmented Control Style */}
         {currentView === 'now' && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="max-w-lg mx-auto px-4 pb-2.5"
+            className="max-w-lg mx-auto px-5 pb-3"
           >
             <EnergyModeSelector />
           </motion.div>
