@@ -21,6 +21,7 @@ import CelebrationOverlay from '@/components/transition-coach/celebration-overla
 import StuckModal from '@/components/transition-coach/stuck-modal';
 import ShareSheet from '@/components/transition-coach/share-sheet';
 import MobileFooter from '@/components/transition-coach/mobile-footer';
+import OnboardingScreen from '@/components/transition-coach/onboarding-screen';
 
 function ZapIcon({ className }: { className?: string }) {
   return (
@@ -40,86 +41,86 @@ function ZapIcon({ className }: { className?: string }) {
 
 export default function TransitionCoach() {
   const hydrated = useHydrated();
-  const { currentView, todayCompletedSteps, getTotalScore } = useStore();
+  const { currentView, todayCompletedSteps, getTotalScore, hasOnboarded } = useStore();
   const score = getTotalScore();
 
   if (!hydrated) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="w-10 h-10 rounded-full border-2 border-emerald-500 border-t-transparent"
-        />
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center animate-pulse">
+            <ZapIcon className="w-6 h-6 text-white" />
+          </div>
+          <p className="text-sm text-muted-foreground">Loading...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* iOS-style frosted header */}
-      <header className="sticky top-0 z-40 bg-background/70 backdrop-blur-2xl border-b border-border/40">
-        <div className="max-w-lg mx-auto px-5 h-[52px] flex items-center justify-between">
+      {/* Onboarding — full screen overlay on first visit */}
+      <AnimatePresence>
+        {!hasOnboarded && <OnboardingScreen />}
+      </AnimatePresence>
+
+      {/* Header — simplified */}
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-[30px] h-[30px] rounded-[9px] bg-black dark:bg-white flex items-center justify-center">
-              <ZapIcon className="w-4 h-4 text-white dark:text-black" />
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-sm shadow-emerald-500/20">
+              <ZapIcon className="w-3.5 h-3.5 text-white" />
             </div>
-            <h1 className="text-[17px] font-bold tracking-tight">
-              Transition Coach
-            </h1>
+            <h1 className="text-sm font-bold tracking-tight">Transition Coach</h1>
           </div>
           <div className="flex items-center gap-2">
             {score > 0 && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full"
+                className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/30"
               >
-                <span className="text-[12px] font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
                   {score}
                 </span>
-                <span className="text-[10px] text-emerald-500 font-medium">pts</span>
               </motion.div>
             )}
             {todayCompletedSteps >= 3 && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-1 bg-orange-50 dark:bg-orange-500/10 px-2.5 py-1 rounded-full"
+                className="flex items-center gap-1 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/30"
               >
-                <span className="text-[12px] font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+                <span className="text-xs">🔥</span>
+                <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 tabular-nums">
                   {todayCompletedSteps}
                 </span>
-                <span className="text-xs leading-none">🔥</span>
               </motion.div>
             )}
           </div>
         </div>
 
-        {/* Energy Mode — only on NOW screen */}
-        <AnimatePresence>
-          {currentView === 'now' && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="max-w-lg mx-auto px-5 pb-2.5"
-            >
-              <EnergyModeSelector />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Energy Mode — only on NOW screen, compact */}
+        {currentView === 'now' && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="max-w-lg mx-auto px-4 pb-2"
+          >
+            <EnergyModeSelector />
+          </motion.div>
+        )}
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-lg mx-auto w-full pb-[132px]">
+      <main className="flex-1 max-w-lg mx-auto w-full pb-40">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentView}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.15 }}
             className="h-full"
           >

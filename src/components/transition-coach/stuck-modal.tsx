@@ -1,22 +1,50 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, X, CheckCircle2, Sparkles, Zap } from 'lucide-react';
+import { Brain, X, CheckCircle2, Sparkles, Zap, Feather } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { playCompletionSound, completions, haptic } from '@/lib/motivation';
 import { useState, useMemo } from 'react';
 
-export default function StuckModal() {
-  const { showStuckModal, stuckTask, dismissStuckModal } = useStore();
-  const [done, setDone] = useState(false);
+const difficultyConfig = {
+  easy: {
+    label: 'Easy',
+    emoji: '🟢',
+    description: '~2 min',
+    color: 'border-emerald-200 dark:border-emerald-800/30 bg-emerald-50 dark:bg-emerald-900/10 hover:border-emerald-400',
+    selectedColor: 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 ring-2 ring-emerald-500/30',
+    textColor: 'text-emerald-700 dark:text-emerald-300',
+  },
+  medium: {
+    label: 'Medium',
+    emoji: '🟡',
+    description: '~5 min',
+    color: 'border-amber-200 dark:border-amber-800/30 bg-amber-50 dark:bg-amber-900/10 hover:border-amber-400',
+    selectedColor: 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 ring-2 ring-amber-500/30',
+    textColor: 'text-amber-700 dark:text-amber-300',
+  },
+  tiny: {
+    label: 'Tiny',
+    emoji: '🔵',
+    description: '~30 sec',
+    color: 'border-sky-200 dark:border-sky-800/30 bg-sky-50 dark:bg-sky-900/10 hover:border-sky-400',
+    selectedColor: 'border-sky-500 bg-sky-50 dark:bg-sky-900/20 ring-2 ring-sky-500/30',
+    textColor: 'text-sky-700 dark:text-sky-300',
+  },
+} as const;
 
-  // Memoize completion message
+export default function StuckModal() {
+  const { showStuckModal, stuckTasks, dismissStuckModal } = useStore();
+  const [done, setDone] = useState(false);
+  const [completedTask, setCompletedTask] = useState<{ label: string; emoji: string } | null>(null);
+
   const completionMsg = useMemo(() => completions[Math.floor(Math.random() * completions.length)], []);
 
-  if (!showStuckModal || !stuckTask) return null;
+  if (!showStuckModal || stuckTasks.length === 0) return null;
 
-  const handleDone = () => {
+  const handleDone = (task: typeof stuckTasks[number]) => {
+    setCompletedTask(task);
     setDone(true);
     playCompletionSound();
     haptic('heavy');
@@ -28,6 +56,12 @@ export default function StuckModal() {
   const handleDismiss = () => {
     dismissStuckModal();
     haptic('light');
+  };
+
+  const difficultyIcons = {
+    easy: Feather,
+    medium: Zap,
+    tiny: Sparkles,
   };
 
   return (
@@ -49,80 +83,91 @@ export default function StuckModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 30 }}
             transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-            className="fixed inset-0 z-[96] flex items-center justify-center p-6 pointer-events-none"
+            className="fixed inset-0 z-[96] flex items-center justify-center p-5 pointer-events-none"
           >
-            <div className="bg-background border border-border rounded-2xl shadow-2xl p-6 max-w-sm w-full pointer-events-auto overflow-hidden relative">
+            <div className="bg-background border border-border rounded-2xl shadow-2xl max-w-sm w-full pointer-events-auto overflow-hidden relative">
               {/* Decorative glow */}
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-rose-100 dark:bg-rose-900/10 rounded-full blur-3xl" />
 
               {!done ? (
                 <>
                   {/* Header */}
-                  <div className="flex items-start justify-between mb-4 relative">
-                    <div className="flex items-center gap-3">
-                      <motion.div
-                        initial={{ rotate: [0, -10, 10, -5, 0] }}
-                        animate={{ rotate: [0, -10, 10, -5, 0] }}
-                        transition={{ duration: 0.6, repeat: 2 }}
-                        className="w-11 h-11 rounded-xl bg-rose-100 dark:bg-rose-900/20 flex items-center justify-center"
-                      >
-                        <Brain className="w-6 h-6 text-rose-500" />
-                      </motion.div>
-                      <div>
-                        <h3 className="font-bold text-base">Do this NOW</h3>
-                        <p className="text-xs text-muted-foreground">
-                          No options. No thinking. Just do it.
-                        </p>
+                  <div className="px-5 pt-5 pb-3 relative">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <motion.div
+                          initial={{ rotate: [0, -10, 10, -5, 0] }}
+                          animate={{ rotate: [0, -10, 10, -5, 0] }}
+                          transition={{ duration: 0.6, repeat: 2 }}
+                          className="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-900/20 flex items-center justify-center"
+                        >
+                          <Brain className="w-5 h-5 text-rose-500" />
+                        </motion.div>
+                        <div>
+                          <h3 className="font-bold text-base">I&apos;m stuck</h3>
+                          <p className="text-xs text-muted-foreground">
+                            Pick your level — one thing to do right now
+                          </p>
+                        </div>
                       </div>
+                      <button
+                        onClick={handleDismiss}
+                        className="text-muted-foreground hover:text-foreground p-1 -mr-1 -mt-1"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
                     </div>
-                    <button
-                      onClick={handleDismiss}
-                      className="text-muted-foreground hover:text-foreground p-1 -mr-1 -mt-1"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
                   </div>
 
-                  {/* THE TASK */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.15 }}
-                    className="bg-gradient-to-br from-rose-50 to-orange-50 dark:from-rose-900/10 dark:to-orange-900/10 border border-rose-200 dark:border-rose-800/30 rounded-xl p-6 text-center mb-4 relative"
-                  >
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', delay: 0.2, stiffness: 300 }}
-                      className="text-5xl block mb-3"
-                    >
-                      {stuckTask.emoji}
-                    </motion.span>
-                    <p className="text-xl font-extrabold text-rose-900 dark:text-rose-100 leading-tight">
-                      {stuckTask.label}
-                    </p>
-                    <div className="flex items-center justify-center gap-1 mt-2">
-                      <Zap className="w-3 h-3 text-rose-400" />
-                      <p className="text-xs text-muted-foreground">
-                        ~2 min. You can do this.
-                      </p>
-                    </div>
-                  </motion.div>
+                  {/* 3 Task Options */}
+                  <div className="px-5 pb-5 space-y-2.5 relative">
+                    {stuckTasks.map((task, i) => {
+                      const config = difficultyConfig[task.difficulty];
+                      const Icon = difficultyIcons[task.difficulty];
 
-                  {/* Action */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <Button
-                      onClick={handleDone}
-                      className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white text-base font-bold rounded-xl shadow-lg shadow-emerald-500/20"
-                    >
-                      <CheckCircle2 className="w-5 h-5 mr-2" />
-                      Done It!
-                    </Button>
-                  </motion.div>
+                      return (
+                        <motion.button
+                          key={task.difficulty}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + i * 0.08 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => handleDone(task)}
+                          className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${config.color}`}
+                        >
+                          {/* Emoji */}
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', delay: 0.15 + i * 0.08 }}
+                            className="w-10 h-10 rounded-xl bg-white dark:bg-background/60 flex items-center justify-center flex-shrink-0 shadow-sm"
+                          >
+                            <span className="text-xl">{task.emoji}</span>
+                          </motion.div>
+
+                          {/* Task info */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-bold text-foreground leading-tight">
+                              {task.label}
+                            </p>
+                            <div className="flex items-center gap-1.5 mt-1">
+                              <Icon className={`w-3 h-3 ${config.textColor}`} />
+                              <span className={`text-[11px] font-medium ${config.textColor}`}>
+                                {config.label} · {config.description}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Do it button */}
+                          <div className="flex-shrink-0">
+                            <div className={`w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm`}>
+                              <CheckCircle2 className="w-4 h-4 text-white" />
+                            </div>
+                          </div>
+                        </motion.button>
+                      );
+                    })}
+                  </div>
                 </>
               ) : (
                 /* Completion state */
@@ -131,7 +176,7 @@ export default function StuckModal() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 300 }}
-                  className="text-center py-4"
+                  className="text-center py-6 px-5"
                 >
                   <motion.div
                     initial={{ scale: 0, rotate: -180 }}
@@ -142,6 +187,9 @@ export default function StuckModal() {
                   </motion.div>
                   <p className="text-lg font-bold mb-1">{completionMsg}</p>
                   <p className="text-sm text-muted-foreground">
+                    {completedTask?.label}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
                     You&apos;re unstuck now. Keep going.
                   </p>
                 </motion.div>

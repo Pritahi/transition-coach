@@ -57,6 +57,10 @@ export type ViewType = 'now' | 'alarms' | 'waiting';
 export type EnergyMode = 'low' | 'normal' | 'high';
 
 interface AppState {
+  // Onboarding
+  hasOnboarded: boolean;
+  setHasOnboarded: (value: boolean) => void;
+
   // Navigation
   currentView: ViewType;
   setCurrentView: (view: ViewType) => void;
@@ -90,8 +94,8 @@ interface AppState {
   showShareSheet: boolean;
   setShowShareSheet: (show: boolean) => void;
 
-  // I'm Stuck
-  stuckTask: { label: string; emoji: string } | null;
+  // I'm Stuck (3 options: easy/medium/tiny)
+  stuckTasks: { label: string; emoji: string; difficulty: 'easy' | 'medium' | 'tiny' }[];
   showStuckModal: boolean;
   triggerStuckTask: () => void;
   dismissStuckModal: () => void;
@@ -135,6 +139,10 @@ function getTodayString(): string {
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
+      // Onboarding
+      hasOnboarded: false,
+      setHasOnboarded: (value) => set({ hasOnboarded: value }),
+
       // Navigation
       currentView: 'now',
       setCurrentView: (view) => set({ currentView: view }),
@@ -291,33 +299,78 @@ export const useStore = create<AppState>()(
       showShareSheet: false,
       setShowShareSheet: (show) => set({ showShareSheet: show }),
 
-      // I'm Stuck
-      stuckTask: null,
+      // I'm Stuck — 3 options: easy, medium, tiny
+      stuckTasks: [],
       showStuckModal: false,
       triggerStuckTask: () => {
         const { energyMode } = get();
-        let tasks: { label: string; emoji: string }[];
-        if (energyMode === 'low') {
-          tasks = [
-            { label: 'Take 5 deep breaths', emoji: '🌬️' },
-            { label: 'Drink one glass of water', emoji: '💧' },
-            { label: 'Stand up and stretch', emoji: '💪' },
-          ];
-        } else if (energyMode === 'high') {
-          tasks = [
-            { label: 'Do 10 jumping jacks', emoji: '🏃' },
-            { label: 'Write your next 3 tasks', emoji: '📝' },
-            { label: 'Reply to one pending message', emoji: '💬' },
-          ];
-        } else {
-          tasks = [
-            { label: 'Walk to another room and back', emoji: '🚶' },
-            { label: 'Put away 3 things', emoji: '📦' },
-            { label: 'Quick face wash', emoji: '🫧' },
-          ];
-        }
-        const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
-        set({ stuckTask: randomTask, showStuckModal: true });
+        const allTasks = {
+          low: {
+            easy: [
+              { label: 'Take 5 deep breaths', emoji: '🌬️' },
+              { label: 'Close your eyes for 30 seconds', emoji: '😴' },
+              { label: 'Put your phone face down', emoji: '📵' },
+            ],
+            medium: [
+              { label: 'Drink one glass of water', emoji: '💧' },
+              { label: 'Stand up and stretch', emoji: '💪' },
+              { label: 'Look out the window for 30 sec', emoji: '🪟' },
+            ],
+            tiny: [
+              { label: 'Sit up straight right now', emoji: '🧘' },
+              { label: 'One deep breath', emoji: '🌬️' },
+              { label: 'Smile for no reason', emoji: '😊' },
+            ],
+          },
+          normal: {
+            easy: [
+              { label: 'Walk to another room and back', emoji: '🚶' },
+              { label: 'Quick face wash', emoji: '🫧' },
+              { label: 'Open a window', emoji: '🪟' },
+            ],
+            medium: [
+              { label: 'Put away 3 things near you', emoji: '📦' },
+              { label: 'Tidy your desk for 2 min', emoji: '🧹' },
+              { label: 'Write one thing grateful for', emoji: '✏️' },
+            ],
+            tiny: [
+              { label: 'Adjust your posture', emoji: '🧘' },
+              { label: 'Touch your toes', emoji: '🦶' },
+              { label: 'Sip water once', emoji: '💧' },
+            ],
+          },
+          high: {
+            easy: [
+              { label: 'Do 10 jumping jacks', emoji: '🏃' },
+              { label: 'Reply to one pending message', emoji: '💬' },
+              { label: 'Text someone "thinking of you"', emoji: '❤️' },
+            ],
+            medium: [
+              { label: 'Write your next 3 tasks', emoji: '📝' },
+              { label: 'Do 5 wall push-ups', emoji: '💪' },
+              { label: 'Organize one messy spot', emoji: '✨' },
+            ],
+            tiny: [
+              { label: 'Flex your muscles', emoji: '💪' },
+              { label: 'One power breath', emoji: '🌬️' },
+              { label: 'Fist pump once', emoji: '✊' },
+            ],
+          },
+        };
+        const pool = allTasks[energyMode];
+        const pick = (arr: { label: string; emoji: string }[]) =>
+          arr[Math.floor(Math.random() * arr.length)];
+        const easy = pick(pool.easy);
+        const medium = pick(pool.medium);
+        const tiny = pick(pool.tiny);
+        set({
+          stuckTasks: [
+            { ...easy, difficulty: 'easy' },
+            { ...medium, difficulty: 'medium' },
+            { ...tiny, difficulty: 'tiny' },
+          ],
+          showStuckModal: true,
+        });
       },
       dismissStuckModal: () => set({ showStuckModal: false }),
 
