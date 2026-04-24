@@ -6,27 +6,21 @@ import { useStore, type EnergyMode } from '@/store/useStore';
 import { energyMessages } from '@/lib/motivation';
 import { haptic } from '@/lib/motivation';
 
-const modes: { id: EnergyMode; icon: typeof Battery; color: string; bg: string; ring: string }[] = [
+const modes: { id: EnergyMode; icon: typeof Battery; activeClass: string }[] = [
   {
     id: 'low',
     icon: Battery,
-    color: 'text-sky-500',
-    bg: 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800/30',
-    ring: 'ring-sky-500/30',
+    activeClass: 'bg-sky-500/10 border-sky-400/40 text-sky-600 dark:text-sky-400',
   },
   {
     id: 'normal',
     icon: Zap,
-    color: 'text-emerald-500',
-    bg: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/30',
-    ring: 'ring-emerald-500/30',
+    activeClass: 'bg-emerald-500/10 border-emerald-400/40 text-emerald-600 dark:text-emerald-400',
   },
   {
     id: 'high',
     icon: Flame,
-    color: 'text-orange-500',
-    bg: 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800/30',
-    ring: 'ring-orange-500/30',
+    activeClass: 'bg-orange-500/10 border-orange-400/40 text-orange-600 dark:text-orange-400',
   },
 ];
 
@@ -39,7 +33,7 @@ export default function EnergyModeSelector() {
   };
 
   return (
-    <div className="flex gap-1.5">
+    <div className="flex gap-1.5 p-0.5 bg-muted/40 rounded-xl">
       {modes.map((mode) => {
         const isActive = energyMode === mode.id;
         const Icon = mode.icon;
@@ -48,19 +42,17 @@ export default function EnergyModeSelector() {
         return (
           <motion.button
             key={mode.id}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => handleSelect(mode.id)}
-            className={`flex-1 flex items-center gap-1.5 p-2 rounded-lg border transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[10px] border transition-all ${
               isActive
-                ? `${mode.bg} ring-2 ring-offset-1 ${mode.ring} shadow-sm`
-                : 'border-transparent bg-muted/20 hover:bg-muted/40'
+                ? `${mode.activeClass} border`
+                : 'border-transparent text-muted-foreground/50 hover:text-muted-foreground'
             }`}
           >
-            <span className="text-base">{meta.emoji}</span>
-            <Icon className={`w-3.5 h-3.5 ${isActive ? mode.color : 'text-muted-foreground'}`} />
-            <span className={`text-[10px] font-semibold ${isActive ? mode.color : 'text-muted-foreground'}`}>
-              {meta.label}
-            </span>
+            <span className="text-[13px]">{meta.emoji}</span>
+            <Icon className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-semibold">{meta.label}</span>
           </motion.button>
         );
       })}

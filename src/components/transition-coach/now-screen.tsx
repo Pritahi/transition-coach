@@ -278,7 +278,7 @@ export default function NowScreen() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="px-4 pt-3 text-center"
+        className="px-5 pt-3 text-center"
       >
         <p className="text-xs font-semibold text-muted-foreground tracking-wide">
           Stop overthinking. Start next step.
@@ -290,7 +290,7 @@ export default function NowScreen() {
         key={motivationalMsg}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="px-4 pt-1"
+        className="px-5 pt-1"
       >
         <p className="text-[11px] text-muted-foreground/70 text-center italic">
           &ldquo;{motivationalMsg}&rdquo;
@@ -306,7 +306,7 @@ export default function NowScreen() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.3 }}
-            className="relative overflow-hidden mx-4 mt-3"
+            className="relative overflow-hidden mx-5 mt-4"
           >
             <div
               className={`text-white p-5 rounded-2xl shadow-lg transition-colors ${
@@ -455,38 +455,30 @@ export default function NowScreen() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mx-4 mt-3"
+            className="mx-5 mt-4"
           >
-            <div className="bg-muted/50 border-2 border-dashed border-muted-foreground/20 rounded-2xl p-6 text-center">
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-16 h-16 mx-auto mb-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center"
-              >
-                <Zap className="w-8 h-8 text-emerald-500" />
-              </motion.div>
-              <h2 className="text-lg font-bold mb-1">Ready when you are</h2>
-              <p className="text-sm text-muted-foreground mb-1">
+            <div className="bg-muted/30 border border-border/40 rounded-2xl p-6 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-7 h-7 text-emerald-500" />
+              </div>
+              <h2 className="text-[17px] font-semibold mb-1">Ready when you are</h2>
+              <p className="text-[13px] text-muted-foreground mb-4">
                 {motivationalMsg}
-              </p>
-              <p className="text-xs text-muted-foreground mb-4">
-                Create a smart alarm or start waiting mode
               </p>
               <div className="flex gap-2 justify-center">
                 <Button
                   onClick={() => setShowCreateAlarm(true)}
-                  size="sm"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                  className="bg-foreground text-background hover:bg-foreground/90 rounded-full h-10 px-5"
                 >
-                  <Zap className="w-4 h-4 mr-1" />
+                  <Zap className="w-4 h-4 mr-1.5" />
                   Create Alarm
                 </Button>
                 <Button
                   variant="outline"
-                  size="sm"
+                  className="rounded-full h-10 px-5"
                   onClick={() => setCurrentView('waiting')}
                 >
-                  <Clock className="w-4 h-4 mr-1" />
+                  <Clock className="w-4 h-4 mr-1.5" />
                   Waiting Mode
                 </Button>
               </div>
@@ -502,7 +494,7 @@ export default function NowScreen() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="mx-4 mt-3"
+            className="mx-5 mt-3"
           >
             <div className="bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30 rounded-xl p-3 flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
@@ -542,7 +534,7 @@ export default function NowScreen() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mx-4 mt-3"
+          className="mx-5 mt-3"
         >
           <motion.button
             whileTap={{ scale: 0.97 }}
@@ -550,17 +542,17 @@ export default function NowScreen() {
               triggerStuckTask();
               haptic('medium');
             }}
-            className="w-full flex items-center gap-3 p-3.5 rounded-xl border border-dashed border-muted-foreground/30 bg-muted/20 hover:bg-muted/40 transition-colors"
+            className="w-full flex items-center gap-3 p-3.5 rounded-2xl border border-border/60 bg-muted/20 hover:bg-muted/40 transition-colors active:scale-[0.98]"
           >
-            <div className="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center flex-shrink-0">
-              <Brain className="w-5 h-5 text-rose-500" />
+            <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center flex-shrink-0">
+              <Brain className="w-4.5 h-4.5 text-rose-500" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-sm font-bold text-rose-700 dark:text-rose-400">
+              <p className="text-[13px] font-semibold text-rose-600 dark:text-rose-400">
                 I&apos;m Stuck
               </p>
               <p className="text-[11px] text-muted-foreground">
-                Tap and we&apos;ll give you one thing to do right now
+                Get one thing to do right now
               </p>
             </div>
             <Sparkles className="w-4 h-4 text-rose-300" />
@@ -573,7 +565,7 @@ export default function NowScreen() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="mx-4 mt-3"
+          className="mx-5 mt-3"
         >
           <button
             onClick={() => setCurrentView('waiting')}
@@ -597,7 +589,7 @@ export default function NowScreen() {
       )}
 
       {/* Content area */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-5 overflow-y-auto">
         {/* COMING UP — next steps from all alarms */}
         {comingUp.length > 0 && (
           <motion.div

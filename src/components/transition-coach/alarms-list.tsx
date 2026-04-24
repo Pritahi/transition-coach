@@ -7,12 +7,10 @@ import {
   Trash2,
   Power,
   ChevronDown,
-  ChevronUp,
   CheckCircle2,
   Circle,
   Zap,
   ArrowRight,
-  Flame,
   Play,
   BadgeCheck,
   Sparkles,
@@ -89,49 +87,31 @@ export default function AlarmsList() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 pb-2">
-        <div>
-          <h2 className="text-xl font-bold">Smart Alarms</h2>
-          <p className="text-sm text-muted-foreground">
-            {alarms.filter((a) => a.isActive).length} active · {alarms.length} total
-          </p>
-        </div>
-        <Button
-          onClick={() => setShowCreateAlarm(true)}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-10 h-10 p-0 shadow-lg shadow-emerald-500/25"
-          size="icon"
-        >
-          <Plus className="w-5 h-5" />
-        </Button>
+      {/* Header — iOS large title style */}
+      <div className="px-5 pt-2 pb-1">
+        <h2 className="text-[28px] font-bold tracking-tight">Alarms</h2>
+        <p className="text-[13px] text-muted-foreground mt-0.5">
+          {alarms.filter((a) => a.isActive).length} active · {alarms.length} total
+        </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
+      <div className="flex-1 overflow-y-auto px-5 pb-4 space-y-2.5">
         {sortedAlarms.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center px-4">
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-900/20 flex items-center justify-center mb-5"
-            >
-              <Clock className="w-12 h-12 text-emerald-400" />
-            </motion.div>
-            <h3 className="text-xl font-bold mb-2">No alarms yet</h3>
-            <p className="text-sm text-muted-foreground mb-1">
-              Turn your chaos into a clear flow
+          <div className="flex flex-col items-center justify-center h-[55vh] text-center px-4">
+            <div className="w-16 h-16 rounded-2xl bg-muted/50 flex items-center justify-center mb-4">
+              <Clock className="w-8 h-8 text-muted-foreground/40" />
+            </div>
+            <h3 className="text-[17px] font-semibold mb-1.5">No alarms yet</h3>
+            <p className="text-[13px] text-muted-foreground mb-6 max-w-[240px] leading-relaxed">
+              Create a smart alarm with step-by-step actions and deadlines.
             </p>
-            <p className="text-xs text-muted-foreground/80 mb-6 max-w-[260px] leading-relaxed">
-              Instead of 500 random alarms, create one smart alarm with 5 action steps. 
-              Each step has a deadline, so you know exactly what to do next.
-            </p>
-            <Button
+            <button
               onClick={() => setShowCreateAlarm(true)}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
-              size="lg"
+              className="inline-flex items-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-full text-[15px] font-semibold active:scale-95 transition-transform"
             >
-              <Zap className="w-5 h-5 mr-2" />
-              Create Your First Flow
-            </Button>
+              <Plus className="w-4 h-4" />
+              Create Alarm
+            </button>
           </div>
         ) : (
           <AnimatePresence>
@@ -154,18 +134,18 @@ export default function AlarmsList() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className={`rounded-xl border transition-colors ${
+                  className={`rounded-2xl border transition-colors ${
                     !alarm.isActive
-                      ? 'border-muted bg-muted/30 opacity-60'
+                      ? 'border-border/40 bg-muted/20 opacity-50'
                       : status === 'completed'
-                      ? 'border-emerald-200 bg-emerald-50 dark:border-emerald-800/30 dark:bg-emerald-900/10'
-                      : 'border-border bg-card'
+                      ? 'border-emerald-200/60 bg-emerald-50/50 dark:border-emerald-800/30 dark:bg-emerald-900/10'
+                      : 'border-border/60 bg-card'
                   }`}
                 >
                   {/* Alarm Header — with flow preview */}
                   <button
                     onClick={() => setExpandedId(isExpanded ? null : alarm.id)}
-                    className="w-full p-4 text-left"
+                    className="w-full p-3.5 text-left"
                   >
                     <div className="flex items-start gap-3">
                       <div
