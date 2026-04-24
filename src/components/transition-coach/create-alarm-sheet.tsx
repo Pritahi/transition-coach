@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus, Zap, Clock, Check } from 'lucide-react';
+import { X, Plus, Minus, Zap, Clock } from 'lucide-react';
 import { useStore, createAlarmData } from '@/store/useStore';
 import { alarmTemplates, type AlarmTemplate } from '@/lib/templates';
 import { Button } from '@/components/ui/button';
@@ -15,8 +15,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 
 interface StepInput {
   label: string;
@@ -119,45 +118,44 @@ export default function CreateAlarmSheet() {
 
   return (
     <Sheet open={showCreateAlarm} onOpenChange={(open) => { if (!open) { setShowCreateAlarm(false); resetForm(); }}}>
-      <SheetContent side="bottom" className="h-[90vh] sm:h-[85vh] rounded-t-3xl px-0">
-        <SheetHeader className="px-6 pb-4">
+      <SheetContent side="bottom" className="h-[85dvh] rounded-t-3xl px-0 flex flex-col [&>button:last-child]:hidden">
+        <SheetHeader className="px-5 pb-3 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div>
-              <SheetTitle className="text-xl">Create Smart Alarm</SheetTitle>
-              <SheetDescription className="text-sm mt-1">
-                Convert your chaos into a clear, step-by-step flow
+              <SheetTitle className="text-lg font-semibold">Create Alarm</SheetTitle>
+              <SheetDescription className="text-xs mt-0.5">
+                Break your task into simple steps
               </SheetDescription>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => { setShowCreateAlarm(false); resetForm(); }}
-              className="rounded-full"
+              className="rounded-full h-8 w-8"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </Button>
           </div>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 px-6 pb-6">
-          <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto px-5 pb-4">
+          <div className="space-y-5">
             {/* Templates */}
             <div>
-              <Label className="text-sm font-medium mb-3 block">Quick Templates</Label>
+              <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2.5 block">Templates</Label>
               <div className="grid grid-cols-3 gap-2">
                 {alarmTemplates.map((template) => (
                   <button
                     key={template.id}
                     onClick={() => handleTemplateSelect(template)}
-                    className={`p-3 rounded-xl border text-center transition-all ${
+                    className={`p-3 rounded-2xl border text-center transition-all active:scale-95 ${
                       selectedTemplate === template.id
-                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 ring-2 ring-emerald-500/20'
-                        : 'border-border hover:border-emerald-300 hover:bg-muted/50'
+                        ? 'border-primary bg-primary/5 ring-1 ring-primary/20'
+                        : 'border-border/50 bg-card active:bg-secondary'
                     }`}
                   >
-                    <span className="text-xl block mb-1">{template.emoji}</span>
+                    <span className="text-lg block mb-0.5">{template.emoji}</span>
                     <span className="text-xs font-medium block">{template.name}</span>
-                    <span className="text-[10px] text-muted-foreground block">{template.steps.length} steps</span>
                   </button>
                 ))}
               </div>
@@ -165,49 +163,47 @@ export default function CreateAlarmSheet() {
 
             {/* Title */}
             <div>
-              <Label htmlFor="alarm-title" className="text-sm font-medium">
-                Alarm Title
+              <Label htmlFor="alarm-title" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Title
               </Label>
               <Input
                 id="alarm-title"
                 placeholder="e.g., Leave for College"
                 value={title}
                 onChange={(e) => { setTitle(e.target.value); setSelectedTemplate(null); }}
-                className="mt-1.5"
+                className="mt-1.5 h-11 rounded-xl bg-secondary border-0"
               />
             </div>
 
             {/* Final Time */}
             <div>
-              <Label htmlFor="alarm-time" className="text-sm font-medium">
-                Final Time (deadline)
+              <Label htmlFor="alarm-time" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Deadline
               </Label>
               <Input
                 id="alarm-time"
                 type="datetime-local"
                 value={finalTime}
                 onChange={(e) => setFinalTime(e.target.value)}
-                className="mt-1.5"
+                className="mt-1.5 h-11 rounded-xl bg-secondary border-0"
               />
             </div>
 
             {/* Steps */}
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <Label className="text-sm font-medium">Steps</Label>
+              <div className="flex items-center justify-between mb-2.5">
+                <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Steps</Label>
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">
-                    {steps.length}/5
-                  </Badge>
+                  <span className="text-xs text-muted-foreground">{steps.length}/5</span>
                   {steps.length < 5 && (
-                    <Button variant="ghost" size="sm" onClick={addStep} className="h-7 px-2">
-                      <Plus className="w-3.5 h-3.5" />
+                    <Button variant="ghost" size="sm" onClick={addStep} className="h-7 w-7 p-0 rounded-full">
+                      <Plus className="w-4 h-4" />
                     </Button>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <AnimatePresence>
                   {steps.map((step, index) => (
                     <motion.div
@@ -215,51 +211,48 @@ export default function CreateAlarmSheet() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="flex items-start gap-2"
+                      className="flex items-start gap-2.5"
                     >
-                      <div className="flex flex-col items-center mt-2">
-                        <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                          <span className="text-xs font-bold text-emerald-600">
+                      <div className="flex flex-col items-center pt-3">
+                        <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-xs font-semibold text-primary">
                             {index + 1}
                           </span>
                         </div>
                         {index < steps.length - 1 && (
-                          <div className="w-0.5 h-8 bg-emerald-200 dark:bg-emerald-800/40 mt-1" />
+                          <div className="w-0.5 h-6 bg-border mt-1" />
                         )}
                       </div>
 
-                      <div className="flex-1 space-y-2 bg-muted/30 rounded-lg p-3">
+                      <div className="flex-1 bg-card rounded-2xl border border-border/50 p-3 space-y-2">
                         <Input
                           placeholder={`Step ${index + 1} action`}
                           value={step.label}
                           onChange={(e) => updateStep(index, 'label', e.target.value)}
-                          className="h-9 bg-background"
+                          className="h-10 rounded-xl bg-secondary border-0"
                         />
                         <div className="flex items-center gap-2">
                           <Clock className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
-                          <span className="text-xs text-muted-foreground flex-shrink-0">
-                            {index === steps.length - 1 ? 'At deadline' : 'Minutes before'}
-                          </span>
                           {index < steps.length - 1 ? (
-                            <Input
-                              type="number"
-                              min={0}
-                              value={step.minutesBefore}
-                              onChange={(e) => updateStep(index, 'minutesBefore', e.target.value)}
-                              className="h-8 w-20 text-sm bg-background"
-                            />
+                            <>
+                              <Input
+                                type="number"
+                                min={0}
+                                value={step.minutesBefore}
+                                onChange={(e) => updateStep(index, 'minutesBefore', e.target.value)}
+                                className="h-8 w-16 text-sm rounded-lg bg-secondary border-0"
+                              />
+                              <span className="text-xs text-muted-foreground">min before</span>
+                            </>
                           ) : (
-                            <Badge variant="outline" className="text-xs">
-                              <Zap className="w-3 h-3 mr-1" />
-                              Final
-                            </Badge>
+                            <span className="text-xs text-muted-foreground">At deadline</span>
                           )}
                           {steps.length > 1 && (
                             <Button
                               variant="ghost"
                               size="icon"
                               onClick={() => removeStep(index)}
-                              className="h-7 w-7 ml-auto text-muted-foreground hover:text-destructive"
+                              className="h-7 w-7 ml-auto text-muted-foreground hover:text-destructive rounded-full"
                             >
                               <Minus className="w-3.5 h-3.5" />
                             </Button>
@@ -285,18 +278,20 @@ export default function CreateAlarmSheet() {
                 </motion.p>
               )}
             </AnimatePresence>
-
-            {/* Submit */}
-            <Button
-              onClick={handleSubmit}
-              disabled={!isValid}
-              className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white text-base font-semibold rounded-xl disabled:opacity-40"
-            >
-              <Zap className="w-5 h-5 mr-2" />
-              Create Smart Alarm
-            </Button>
           </div>
-        </ScrollArea>
+        </div>
+
+        {/* Fixed Bottom Button */}
+        <div className="flex-shrink-0 px-5 py-4 border-t border-border/50 bg-background">
+          <Button
+            onClick={handleSubmit}
+            disabled={!isValid}
+            className="w-full h-12 rounded-2xl text-base font-semibold disabled:opacity-40"
+          >
+            <Zap className="w-4 h-4 mr-2" />
+            Create Alarm
+          </Button>
+        </div>
       </SheetContent>
     </Sheet>
   );
